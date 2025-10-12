@@ -1,0 +1,62 @@
+.table-wrap {
+  margin-top: 1rem;
+  overflow: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 620px;
+
+  @media (max-width: 720px) {
+    min-width: 0;
+  }
+}
+
+thead th {
+  text-align: left;
+  font-size: 0.85rem;
+  padding: .75rem 1rem;
+  color: var(--muted);
+  background: transparent;
+  position: sticky;
+  top:0;
+  z-index: 2;
+  backdrop-filter: blur(4px);
+
+  &.id { width: 50px; }
+  &.created-at { width: 160px; }
+  &.actions { width: 140px; text-align: right; }
+}
+
+tbody {
+  width: 100%;
+  display: table-row-group;
+}
+
+tr.todo-row {
+  background: var(--card);
+  transform-origin: center;
+  transition: transform .28s cubic-bezier(.2, .9, .3, 1), opacity .25s ease, background .2s ease;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, .03);
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  .entering {
+    animation: rowEnter .32s cubic-bezier(.2, .9, .3, 1) both;
+  }
+
+  .leaving {
+    animation: rowLeave .28s ease both;
+  }
+}
+
+.empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--muted);
+}

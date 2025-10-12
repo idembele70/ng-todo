@@ -1,1 +1,61 @@
 /* You can add global styles to this file, and also import other style files */
+:root{
+  --bg: #fff7ed; /* light warm background */
+  --card: rgba(255,255,255,0.7);
+  --accent: #ff7a18; /* vibrant orange */
+  --muted: #6b7280;
+  --success: #10b981;
+  --danger: #ef4444;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  --sm: 720px;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background: linear-gradient(180deg, var(--bg), #fff);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: #111827;
+}
+
+.container {
+  width: 100%;
+  max-width: 880px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.9));
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(16, 24, 40, .08);
+  padding: 1.25rem;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgb(0, 0, 0, .03);
+}
+
+.btn {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  padding: .55rem .85rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: .95rem;
+  transition: transform .12s ease, box-shadow .12s, opacity .12s ease;
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.muted {
+  color: var(--muted);
+  font-size: .85rem;
+  @media (max-width: 720px) {
+    font-size: .78rem;
+  }
+} 

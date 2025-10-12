@@ -1,0 +1,38 @@
+header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 1.25rem;
+  margin: 0;
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.badge {
+  background: linear-gradient(90deg, var(--accent), #ffb86b);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  box-shadow: 0 6px 18px rgba(255, 122, 24, .15);
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+h5.muted {
+  margin-top: 6px;
+}
+.btn.clear-all {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid rgba(255, 122, 24, 0.12);
+}

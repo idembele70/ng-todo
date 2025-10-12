@@ -1,0 +1,18 @@
+<td>1</td>
+<td>
+  <div class="title">
+    <label
+      class="custom-checkbox" [title]="(completed ? 'todoTable.row.checkboxLabel.unCompleted' : 'todoTable.row.checkboxLabel.completed') | translate">
+      <input name="toggleCompletion" type="checkbox" [ariaPressed]="completed">
+      <span class="check-mark"></span>
+    </label>
+    <div class="todo-text">
+      Envoyer l'email à Amine
+    </div>
+  </div>
+</td>
+<td class="muted">12/10/2025 09:14:13</td>
+<td class="actions">
+  <button [title]="'todoTable.row.btn.edit.title' | translate" class="icon-btn">✎</button>
+  <button [title]="'todoTable.row.btn.remove.title' | translate" class="icon-btn">🗑</button>
+</td>

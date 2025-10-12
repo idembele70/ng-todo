@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { AddFormComponent } from "./components/add-form/add-form.component";
+import { HeaderComponent } from "./components/header/header.component";
+import { TodoTableComponent } from "./components/todo-table/todo-table.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, HeaderComponent, AddFormComponent, TodoTableComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'ng-todo';
 }

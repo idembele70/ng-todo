@@ -1,0 +1,38 @@
+{
+  "header": {
+    "title": {
+      "content": "Liste des tâches",
+      "badge": "par @idembele70"
+    },
+    "subTitle": "Ajoute, complète, édite, supprime.", 
+    "clear" : {
+      "completed": "Supprimer terminées",
+      "all": "Vider"
+    }
+  },
+  "addTodoForm": {
+    "placeholder": "Nouvelle tâche...(ex: Appeler maman)",
+    "add": "Ajouter"
+  },
+  "todoTable": {
+    "header": {
+      "id": "#",
+      "task": "Tâche",
+      "createdAt": "créée",
+      "actions": "Actions"
+    },
+    "row": {
+      "checkboxLabel": {
+        "completed": "Marqué comme non fait",
+        "unCompleted": "Marquer comme fait"
+      },
+      "btn": {
+        "remove": {
+          "edit": "Modifier",
+          "title": "Supprimer"
+        }
+      }
+    },
+    "empty": "Aucune tâche — ajoute la première !"
+  }
+}

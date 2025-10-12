@@ -1,0 +1,23 @@
+<div class="table-wrap" aria-live="polite">
+  <table aria-describedby="desc">
+    <thead>
+      <tr>
+        <th class="id">{{ 'todoTable.header.id' | translate }}</th>
+        <th>{{ 'todoTable.header.task' | translate }}</th>
+        <th class="created-at">{{ 'todoTable.header.createdAt' | translate }}</th>
+        <th class="actions">{{ 'todoTable.header.actions' | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="todo-row" app-todo-table-row><tr>
+      <tr class="todo-row" app-todo-table-row><tr>
+      <tr class="todo-row" app-todo-table-row><tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #emptyState>
+  <div class="empty">
+    {{ 'todoTable.empty' | translate }}
+  </div>
+</ng-template>
