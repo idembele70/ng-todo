@@ -1,4 +1,4 @@
-  <form class="add-todo-form" (submit)="onAddTodo(todoInput.value)">
-    <input #todoInput type="text" name="todoInput" [placeholder]="'addTodoForm.placeholder' | translate" autocomplete="off">
-    <button class="btn" type="submit">{{ 'addTodoForm.add' | translate }}</button>
-  </form>
+<form #todoForm="ngForm" class="add-todo-form" (submit)="onAddTodo($event)">
+  <input #todoInput="ngModel" [(ngModel)]="todoName" type="text" name="todoInput" [placeholder]="'addTodoForm.placeholder' | translate" autocomplete="off" required minlength="1">
+  <button class="btn" [disabled]="todoForm.invalid" type="submit">{{ 'addTodoForm.add' | translate }}</button>
+</form>
