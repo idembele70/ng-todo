@@ -38,8 +38,8 @@ export default defineConfig({
       name: 'local',
       use: { 
         ...devices['Desktop Chrome'],
-        ...devices['Desktop Firefox'],
-        ...devices['Desktop Safari'],
+        // ...devices['Desktop Firefox'],
+        // ...devices['Desktop Safari'],
         baseURL: process.env['BASE_URL'],
       },
       
