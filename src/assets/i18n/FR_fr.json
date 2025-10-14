@@ -13,7 +13,7 @@
   "addTodoForm": {
     "placeholder": "Nouvelle tâche...(ex: Appeler maman)",
     "add": "Ajouter",
-    "success": "Tâches créé avec succès !",
+    "success": "Tâche créé avec succès !",
     "error": "Erreur lors de la création. Réessayez."
   },
   "todoTable": {
