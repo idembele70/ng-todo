@@ -1,17 +1,17 @@
-<td>1</td>
+<td>{{ todo.id }}</td>
 <td>
   <div class="title">
     <label
-      class="custom-checkbox" [title]="(completed ? 'todoTable.row.checkboxLabel.unCompleted' : 'todoTable.row.checkboxLabel.completed') | translate">
-      <input name="toggleCompletion" type="checkbox" [ariaPressed]="completed">
+      class="custom-checkbox" [title]="(todo.complete ? 'todoTable.row.checkboxLabel.unCompleted' : 'todoTable.row.checkboxLabel.completed') | translate">
+      <input name="toggleCompletion" type="checkbox" [ariaPressed]="todo.complete">
       <span class="check-mark"></span>
     </label>
     <div class="todo-text">
-      Envoyer l'email à Amine
+      {{ todo.title }}
     </div>
   </div>
 </td>
-<td class="muted">12/10/2025 09:14:13</td>
+<td class="muted">{{ todo.createdAt | date:'dd/MM/yyyy HH:mm:ss' }}</td>
 <td class="actions">
   <button [title]="'todoTable.row.btn.edit.title' | translate" class="icon-btn">✎</button>
   <button [title]="'todoTable.row.btn.remove.title' | translate" class="icon-btn">🗑</button>
