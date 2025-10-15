@@ -28,15 +28,15 @@
         "completed": {
           "title": "Marquer comme non fait",
           "message": {
-            "success": "Tâche marquée comme terminée avec succès.",
-            "error": "Une erreur est survenue lors du marquage comme terminée."
+            "success": "Tâche marquée comme non terminée avec succès.",
+            "error": "Une erreur est survenue lors du marquage comme non terminée."
           }
         },
         "unCompleted": {
           "title": "Marquer comme fait",
           "message": {
-            "success": "Tâche marquée comme non terminée avec succès.",
-            "error": "Une erreur est survenue lors du marquage comme non terminée."
+            "success": "Tâche marquée comme terminée avec succès.",
+            "error": "Une erreur est survenue lors du marquage comme terminée."
           }
         }
       },
