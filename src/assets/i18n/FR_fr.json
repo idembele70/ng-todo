@@ -31,7 +31,11 @@
       "btn": {
         "remove": {
           "edit": "Modifier",
-          "title": "Supprimer"
+          "title": "Supprimer",
+          "messages": {
+            "success": "La tâche a été supprimée avec succès.",
+            "error": "La suppression de la tâche a échoué. Veuillez réessayer."
+          }
         }
       }
     },
