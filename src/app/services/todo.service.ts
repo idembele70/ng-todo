@@ -8,12 +8,20 @@ import { Todo } from '../models/todo.model';
 })
 export class TodoService {
   private readonly _todos$ = new BehaviorSubject<Todo[]>([]);
+  private readonly _baseUrl = '/todos';
   readonly todos$ = this._todos$.asObservable();
+  private readonly _isProcessing$ = new BehaviorSubject(false);
+  readonly isProcessing$ = this._isProcessing$.asObservable();
 
   constructor(private readonly httpClient: HttpClient) { }
 
   addTodo(title: string) {
-    return this.httpClient.post('/todos/new', { title });
+    return this.httpClient.post(`${this._baseUrl}/new`, { title });
+  }
+
+  deleteTodo(id: number) {
+    this.setProcessing(true);
+    return this.httpClient.delete(`${this._baseUrl}/${id}`);
   }
 
   fetchTodos() {
@@ -28,5 +36,9 @@ export class TodoService {
     return this.httpClient.get<Todo[]>('/todos').pipe(
       tap(todos => this._todos$.next(todos)),
     )
+  }
+
+  setProcessing(value: boolean) {
+    this._isProcessing$.next(value);
   }
 }

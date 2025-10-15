@@ -1,6 +1,6 @@
 .table-wrap {
   margin-top: 1rem;
-  overflow: auto;
+  overflow-x: hidden;
   border-radius: 12px;
   border: 1px solid rgba(0, 0, 0, 0.03);
 }
@@ -50,12 +50,20 @@ tr.todo-row {
     animation: rowEnter .32s cubic-bezier(.2, .9, .3, 1) both;
   }
 
+  &.leaving {
+    animation: rowLeave .28s ease both;
+  }
+
+}
+@keyframes rowEnter {
+from{ opacity:0; transform: translateY(-12px) scale(0.995); }
+to{ opacity:1; transform: none; }
 }
 
-  @keyframes rowEnter {
-  from{ opacity:0; transform: translateY(-12px) scale(0.995); }
-  to{ opacity:1; transform: none; }
-  }
+@keyframes rowLeave {
+from{ opacity:1; transform:none; }
+to{ opacity:0; transform: translateX(20px) scale(.98) }
+}
 
 .empty {
   text-align: center;

@@ -9,7 +9,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="todo-row" *ngFor="let todo of (todos$ | async); trackBy: trackById" app-todo-table-row [todo]="todo"></tr>
+      <tr 
+        class="todo-row"
+        *ngFor="let todo of (todos$ | async); trackBy: trackById"
+        app-todo-table-row [todo]="todo"
+        (delete)="onDeleteTodo($event)"
+        [isProcessing]="(isProcessing$ | async) ?? false"
+        >
+      </tr>
     </tbody>
   </table>
 </div>

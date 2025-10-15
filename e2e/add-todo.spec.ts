@@ -9,12 +9,16 @@ test.describe('It should add a new todo', () => {
 
   
   test.beforeAll(async ({ browser }) => {
+    await TodoPage.resetDB();
+
     page = await browser.newPage()
     todoPage = new TodoPage(page);
     await todoPage.goto();
   })
 
   test.afterAll(async () => {
+    await TodoPage.resetDB();
+
     await page.close();
   })
 
