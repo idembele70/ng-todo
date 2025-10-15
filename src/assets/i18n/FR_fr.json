@@ -26,10 +26,10 @@
     "row": {
       "checkboxLabel": {
         "completed": {
-          "title": "Marqué comme non fait",
+          "title": "Marquer comme non fait",
           "message": {
             "success": "Tâche marquée comme terminée avec succès.",
-            "error": "Une erreur est survenue lors du marque comme terminée."
+            "error": "Une erreur est survenue lors du marquage comme terminée."
           }
         },
         "unCompleted": {
