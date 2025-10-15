@@ -17,7 +17,9 @@ td {
 }
 
 
-.custom-checkbox {
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
   display: inline-block;
   min-width: 18px;
   min-height: 18px;
@@ -29,6 +31,21 @@ td {
   position: relative;
   cursor: pointer;
   text-align: center;
+  outline: none;
+  transition: all .2s;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    top: 2px;
+    left: 5px;
+    transform: rotate(45deg) scale(0);
+    transition: transform .2s;
+  }
 
   &:hover {
     background-color: #ddd;
@@ -38,20 +55,16 @@ td {
     display: none;
   }
 
-  &:has(input:checked) {
+  &:checked {
     background:var(--success);
     border-color:transparent;
   }
-  & input:checked + .check-mark::after {
-    content: "";
-    position: absolute;
-    left: 5px;
-    top: 1px;
-    width: 6px;
-    height: 12px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
+  &:checked::before {
+    transform: rotate(45deg) scale(1);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 }
 
@@ -75,5 +88,29 @@ td {
 
   &.is-processing {
     cursor: not-allowed;
+  }
+}
+
+@keyframes strike {
+    0%   { width : 0; }
+    100% { width: 100%; }
+  }
+
+.todo-text {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: ' ';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background: black;
+    transition: width .3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  &.strike::after {
+    width: 100%;
   }
 }

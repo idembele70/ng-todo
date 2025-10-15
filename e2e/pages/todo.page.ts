@@ -16,6 +16,20 @@ export class TodoPage {
     await this.addTodoForm.addBtn.click();
   }
 
+  async completeTodo(title: string) {
+    const isChecked = await this.todoTable.completeCheckbox(title).isChecked();
+    if (isChecked) return;
+
+    await this.todoTable.completeCheckboxLabel(title).click();
+  }
+
+  async unCompleteTodo(title: string) {
+    const isChecked = await this.todoTable.completeCheckbox(title).isChecked();
+    if (!isChecked) return;
+
+    await this.todoTable.completeCheckboxLabel(title).click();
+  }
+
   static async resetDB() {
     const apiRequest = await request.newContext();
     const url = process.env['BACKEND_URL'] + '/todos';

@@ -11,4 +11,14 @@ export class TodoTableComponent {
     const todoRow = this.todoRow.filter({ hasText: title});
     return todoRow.getByTitle('Supprimer');
   }
+  
+  completeCheckboxLabel(title: string) {
+    const todoRow = this.todoRow.filter({ hasText: title});
+    return todoRow.getByTestId('todo-row-checkbox-label');
+  }
+  
+  completeCheckbox(title: string) {
+    const todoRow = this.todoRow.filter({ hasText: title});
+    return todoRow.getByTestId('todo-row-checkbox');
+  }
 }

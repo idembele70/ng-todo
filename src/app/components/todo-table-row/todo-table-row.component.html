@@ -2,11 +2,23 @@
 <td>
   <div class="title">
     <label
-      class="custom-checkbox" [title]="(todo.complete ? 'todoTable.row.checkboxLabel.unCompleted' : 'todoTable.row.checkboxLabel.completed') | translate">
-      <input name="toggleCompletion" type="checkbox" [ariaPressed]="todo.complete">
-      <span class="check-mark"></span>
+      data-testid="todo-row-checkbox-label"
+      [title]="(todo.complete 
+        ? 'todoTable.row.checkboxLabel.unCompleted.title'
+        : 'todoTable.row.checkboxLabel.completed.title') | translate">
+      <input
+      data-testid="todo-row-checkbox"
+      [disabled]="isProcessing"
+      name="toggleCompletion"
+      [checked]="!!todo.complete"
+      (click)="onToggleComplete($event)"
+      type="checkbox"
+      [ariaPressed]="!!todo.complete">
     </label>
-    <div class="todo-text">
+    <div
+      class="todo-text"
+      [class.strike]="todo.complete"
+      #todoTextEl>
       {{ todo.title }}
     </div>
   </div>

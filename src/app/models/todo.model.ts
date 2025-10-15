@@ -1,6 +1,6 @@
 export interface Todo {
   readonly id: number;
   title: string;
-  complete: boolean;
+  complete: 0 | 1;
   readonly createdAt: string;
 }

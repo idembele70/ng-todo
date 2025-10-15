@@ -15,6 +15,7 @@
         app-todo-table-row [todo]="todo"
         (delete)="onDeleteTodo($event)"
         [isProcessing]="(isProcessing$ | async) ?? false"
+        (toggleComplete)="onToggleComplete($event)"
         >
       </tr>
     </tbody>

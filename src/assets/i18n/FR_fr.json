@@ -25,8 +25,20 @@
     },
     "row": {
       "checkboxLabel": {
-        "completed": "Marqué comme non fait",
-        "unCompleted": "Marquer comme fait"
+        "completed": {
+          "title": "Marqué comme non fait",
+          "message": {
+            "success": "Tâche marquée comme terminée avec succès.",
+            "error": "Une erreur est survenue lors du marque comme terminée."
+          }
+        },
+        "unCompleted": {
+          "title": "Marquer comme fait",
+          "message": {
+            "success": "Tâche marquée comme non terminée avec succès.",
+            "error": "Une erreur est survenue lors du marquage comme non terminée."
+          }
+        }
       },
       "btn": {
         "remove": {
