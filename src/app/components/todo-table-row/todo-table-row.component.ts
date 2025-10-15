@@ -37,9 +37,8 @@ export class TodoTableRowComponent implements AfterViewInit, OnDestroy {
     const enteringDueTime = 400;
     interval(enteringDueTime)
       .pipe(
-        takeUntil(this._destroy$),
         tap(() => this.renderer.removeClass(this.el.nativeElement, 'entering')),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
       ).subscribe()
   }
   
