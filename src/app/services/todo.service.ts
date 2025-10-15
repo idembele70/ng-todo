@@ -27,9 +27,9 @@ export class TodoService {
 
   toggleTodoCompletion$({ id, complete }: CompleteTodoEvent) {
     this.setProcessing(true);
-    const headers = new HttpHeaders();
-    headers.set('Content-type', 'application/json');
-  
+    const headers = new HttpHeaders()
+      .set('Content-type', 'application/json');
+
     return this.httpClient.put<Todo>(
       `${this._baseUrl}/${id}`,
       { complete },
