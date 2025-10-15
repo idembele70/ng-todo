@@ -13,7 +13,7 @@
       [checked]="!!todo.complete"
       (click)="onToggleComplete($event)"
       type="checkbox"
-      [ariaPressed]="!!todo.complete">
+      [attr.ariaChecked]="!!todo.complete">
     </label>
     <div
       class="todo-text"
