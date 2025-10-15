@@ -87,7 +87,7 @@ export class TodoTableComponent implements OnInit, OnDestroy {
     )
   }
 
-  private getTranslationKey(isComplete: number) {
-    return isComplete === 1 ? 'completed' : 'unCompleted';
+  private getTranslationKey(isComplete: 0 | 1) {
+    return isComplete ? 'completed' : 'unCompleted';
   }
 }
