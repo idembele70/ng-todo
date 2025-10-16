@@ -77,7 +77,7 @@ test.describe.serial('Edit Todo Title', () => {
       await row.waitFor({ state: 'hidden' });
     })
 
-    test('It should edit title and press Enter', async () => {await page.pause()
+    test('It should edit title and press Enter', async () => {
       await editInput.press('Enter');
       await expect(todoTitle).toBeVisible();
       await expect(todoTitle).toHaveText(TODO_TITLE_EDITED);
@@ -96,7 +96,6 @@ test.describe.serial('Edit Todo Title', () => {
     });
   });
   test('It should keep previous title if user save with empty title', async () => {
-    await page.pause();
     await todoPage.addTodo(TODO_TITLE_EDITED);
     await editButton.click();
     await editInput.clear();
