@@ -1,8 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, of, tap } from 'rxjs';
-import { Todo } from '../models/todo.model';
 import { CompleteTodoEvent } from '../models/complete-todo-event.model';
+import { Todo } from '../models/todo.model';
 
 @Injectable({
   providedIn: 'root'
