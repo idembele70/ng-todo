@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, of, tap } from 'rxjs';
+import { CompleteTodoEvent } from '../models/complete-todo-event.model';
 import { Todo } from '../models/todo.model';
 
 @Injectable({
@@ -22,6 +23,14 @@ export class TodoService {
   deleteTodo(id: number) {
     this.setProcessing(true);
     return this.httpClient.delete(`${this._baseUrl}/${id}`);
+  }
+
+  toggleTodoCompletion$({ id, complete }: CompleteTodoEvent) {
+    this.setProcessing(true);
+    return this.httpClient.put<Todo>(
+      `${this._baseUrl}/${id}`,
+      { complete },
+    );
   }
 
   fetchTodos() {
