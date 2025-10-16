@@ -29,7 +29,7 @@ test.describe('It should add a new todo', () => {
     await todoPage.addTodoForm.todoInput.fill(title);
     await todoPage.addTodoForm.todoInput.press('Enter');
     
-    await expect(todoPage.todoTable.todoRow).toHaveCount(todoCount);
+    await expect(todoPage.todoTable.todoRows).toHaveCount(todoCount);
   });
   
   test('It should add a todo when clicking Add button', async () => {
@@ -38,6 +38,6 @@ test.describe('It should add a new todo', () => {
 
     await todoPage.addTodoForm.todoInput.fill(title);
     await todoPage.addTodoForm.addBtn.click();
-    await expect(todoPage.todoTable.todoRow).toHaveCount(todoCount)
+    await expect(todoPage.todoTable.todoRows).toHaveCount(todoCount)
   })
 })

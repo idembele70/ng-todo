@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { CompleteTodoEvent } from '../models/complete-todo-event.model';
+import { EditTodoTitleEvent } from '../models/edit-todo-title-event.model';
 import { Todo } from '../models/todo.model';
 
 @Injectable({
@@ -30,6 +31,15 @@ export class TodoService {
     return this.httpClient.put<Todo>(
       `${this._baseUrl}/${id}`,
       { complete },
+    );
+  }
+
+  editTodoTitle$({ id, title }: EditTodoTitleEvent): Observable<Todo> {
+    this.setProcessing(true);
+
+    return this.httpClient.put<Todo>(
+      `${this._baseUrl}/${id}`,
+      { title },
     );
   }
 

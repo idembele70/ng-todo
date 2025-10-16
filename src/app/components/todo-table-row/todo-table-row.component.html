@@ -1,8 +1,6 @@
 <td>{{ todo.id }}</td>
 <td>
   <div class="title">
-    <label
-      data-testid="todo-row-checkbox-label">
       <input
       data-testid="todo-row-checkbox"
       [disabled]="isProcessing"
@@ -14,21 +12,49 @@
       [attr.aria-label]="(todo.complete 
         ? 'todoTable.row.checkboxLabel.completed.title'
         : 'todoTable.row.checkboxLabel.unCompleted.title') | translate">
-    </label>
     <div
+      data-testid="todo-text-wrapper"
+      class="todo-text-wrapper"
+      (dblclick)="onStartEdit()">
+      <div
+      data-testid="todo-text"
+      *ngIf="!editing; else titleInputContainerEl"
       class="todo-text"
-      [class.strike]="todo.complete">
+      [class.strike]="todo.complete"
+      [title]="todo.title"
+      >
       {{ todo.title }}
     </div>
   </div>
+    <ng-template #titleInputContainerEl>
+      <input
+        data-testid="edit-todo-title-input"
+        #titleInputRef
+        [disabled]="isProcessing && !editing"
+        type="text"
+        [(ngModel)]="todo.title"
+        autocomplete="off"
+        (keyup.enter)="save($event)"
+        (keyup.esc)="save($event)"
+        name="editTodoTitle"
+        [attr.aria-label]="'todoTable.row.title.editInput.ariaLabel' | translate">
+    </ng-template>
+  </div>
 </td>
 <td class="muted">{{ todo.createdAt | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-<td class="actions">
-  <button [title]="'todoTable.row.btn.edit.title' | translate" class="icon-btn">✎</button>
-  <button
+<td>
+  <div class="actions">
+    <button
+    data-testid="edit-todo-title-button"
+    [title]="'todoTable.row.btn.edit.title' | translate" class="icon-btn"
+    (click)="onStartEdit()"
+    [disabled]="isProcessing"
+    >✎</button>
+    <button
+    data-testid="delete-todo"
     (click)="onDeleteTodo()"
     [title]="'todoTable.row.btn.remove.title' | translate"
     class="icon-btn"
-    [class.is-processing]="isProcessing"
     [disabled]="isProcessing">🗑</button>
+  </div>
 </td>

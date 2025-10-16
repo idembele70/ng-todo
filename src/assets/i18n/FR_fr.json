@@ -27,22 +27,33 @@
       "checkboxLabel": {
         "completed": {
           "title": "Marquer comme non fait",
-          "message": {
+          "messages": {
             "success": "Tâche marquée comme non terminée avec succès.",
             "error": "Une erreur est survenue lors du marquage comme non terminée."
           }
         },
         "unCompleted": {
           "title": "Marquer comme fait",
-          "message": {
+          "messages": {
             "success": "Tâche marquée comme terminée avec succès.",
             "error": "Une erreur est survenue lors du marquage comme terminée."
           }
         }
       },
+      "title": {
+        "editInput": {
+          "ariaLabel": "Modifier le titre",
+          "messages": {
+            "success": "Le tâche à été modifié avec succès !",
+            "error":"Une erreur est survenue lors de la modification du titre de la tâche."
+          }
+        }
+      },
       "btn": {
+        "edit" : {
+          "title": "Modifier"
+        },
         "remove": {
-          "edit": "Modifier",
           "title": "Supprimer",
           "messages": {
             "success": "La tâche a été supprimée avec succès.",

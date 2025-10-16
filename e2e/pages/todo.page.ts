@@ -3,7 +3,7 @@ import { AddFormComponent } from "./components/add-form.component";
 import { TodoTableComponent } from "./components/todo-table.component";
 
 export class TodoPage {
-  constructor(private readonly page: Page) {}
+  constructor(private readonly page: Page) { }
   readonly addTodoForm = new AddFormComponent(this.page);
   readonly todoTable = new TodoTableComponent(this.page);
 
@@ -20,19 +20,32 @@ export class TodoPage {
     const isChecked = await this.todoTable.completeCheckbox(title).isChecked();
     if (isChecked) return;
 
-    await this.todoTable.completeCheckboxLabel(title).click();
+    await this.todoTable.completeCheckbox(title).click();
   }
 
   async unCompleteTodo(title: string) {
     const isChecked = await this.todoTable.completeCheckbox(title).isChecked();
     if (!isChecked) return;
 
-    await this.todoTable.completeCheckboxLabel(title).click();
+    await this.todoTable.completeCheckbox(title).click();
+  }
+
+  async deleteTodo(title: string) {
+    const row = this.todoTable.todoRow(title);
+    await row.getByTestId('delete-todo').click();
   }
 
   static async resetDB() {
     const apiRequest = await request.newContext();
     const url = process.env['BACKEND_URL'] + '/todos';
     await apiRequest.delete(url);
+  }
+
+  async blur() {
+    const body = this.page.locator('body');
+    body.click({
+      position:
+        { x: 0, y: 0 }
+    });
   }
 }
