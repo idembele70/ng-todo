@@ -56,7 +56,7 @@ test.describe.serial('Edit Todo Title', () => {
       await editButton.click();
       await expect(editInput).toBeVisible();
       await expect(editButton).toBeDisabled();
-      await editButton.press('Escape');
+      await editInput.press('Escape');
     })
   });
 
