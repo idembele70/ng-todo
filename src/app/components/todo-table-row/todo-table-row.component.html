@@ -2,10 +2,7 @@
 <td>
   <div class="title">
     <label
-      data-testid="todo-row-checkbox-label"
-      [title]="(todo.complete 
-        ? 'todoTable.row.checkboxLabel.unCompleted.title'
-        : 'todoTable.row.checkboxLabel.completed.title') | translate">
+      data-testid="todo-row-checkbox-label">
       <input
       data-testid="todo-row-checkbox"
       [disabled]="isProcessing"
@@ -13,7 +10,10 @@
       [checked]="!!todo.complete"
       (click)="onToggleComplete($event)"
       type="checkbox"
-      [attr.ariaChecked]="!!todo.complete">
+      [attr.aria-checked]="!!todo.complete"
+      [attr.aria-label]="(todo.complete 
+        ? 'todoTable.row.checkboxLabel.completed.title'
+        : 'todoTable.row.checkboxLabel.unCompleted.title') | translate">
     </label>
     <div
       class="todo-text"
