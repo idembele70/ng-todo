@@ -26,8 +26,7 @@ body {
 }
 
 .container {
-  width: 100%;
-  max-width: 880px;
+  width: min(100%, 880px);
   background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.9));
   border-radius: 16px;
   box-shadow: 0 12px 30px rgba(16, 24, 40, .08);
@@ -49,6 +48,10 @@ body {
 
   &:active {
     transform: translateY(1px);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 }
 

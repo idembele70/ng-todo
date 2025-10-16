@@ -24,10 +24,9 @@ test.describe('Todo completion', () => {
   test('It should mark a todo as completed', async () => {
     const title = 'todo to complete';
     await todoPage.addTodo(title);
-    const completeCheckboxLabel = todoPage.todoTable.completeCheckboxLabel(title);
-    await completeCheckboxLabel.click();
-
     const completeCheckbox = todoPage.todoTable.completeCheckbox(title);
+    await completeCheckbox.click();
+
     await expect(completeCheckbox).toBeChecked();
   });
 

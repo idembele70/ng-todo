@@ -86,14 +86,23 @@ input[type="checkbox"] {
     background: rgba(15, 23, 42, .03);
   }
 
-  &.is-processing {
+  &:disabled {
     cursor: not-allowed;
   }
+}
+
+.todo-text-wrapper {
+  display: inline-grid;
+  width: 100%;
 }
 
 .todo-text {
   position: relative;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: fit-content;
+  max-width: 100%;
 
   &::after {
     content: ' ';
@@ -108,4 +117,14 @@ input[type="checkbox"] {
   &.strike::after {
    width: 100%;
   }
+}
+
+input[name="editTodoTitle"] {
+  width: 100%;
+  padding: .6rem .75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, .06);
+  font-size: .95rem;
+  outline: none;
+  transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
 }

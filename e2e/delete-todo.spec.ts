@@ -18,6 +18,6 @@ test.describe('Todo Deletion', () => {
     await todoPage.addTodo(title);
     await todoPage.todoTable.deleteTodoBtn(title).click();
 
-    await expect(todoPage.todoTable.todoRow).toHaveCount(EMPTY_TODO_COUNT);
+    await expect(todoPage.todoTable.todoRows).toHaveCount(EMPTY_TODO_COUNT);
   });
 })

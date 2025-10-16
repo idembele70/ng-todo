@@ -4,6 +4,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from "ngx-toastr";
 import { catchError, EMPTY, finalize, fromEvent, race, Subject, switchMap, take, takeUntil, tap, timer } from "rxjs";
 import { CompleteTodoEvent } from "../../models/complete-todo-event.model";
+import { EditTodoTitleEvent } from "../../models/edit-todo-title-event.model";
 import { Todo } from "../../models/todo.model";
 import { TodoService } from '../../services/todo.service';
 import { DeleteTodoEvent, TodoTableRowComponent } from "../todo-table-row/todo-table-row.component";
@@ -23,7 +24,7 @@ export class TodoTableComponent implements OnInit, OnDestroy {
   private readonly _destroy$ = new Subject<void>();
   
   readonly todos$ = this.todoService.todos$;
-  readonly isProcessing$ = this.todoService.isProcessing$
+  readonly isProcessing$ = this.todoService.isProcessing$;
 
   private readonly ANIMATION_TIMEOUT = 2_000;
 
@@ -36,17 +37,13 @@ export class TodoTableComponent implements OnInit, OnDestroy {
   trackById(_: number, todo: Todo) { return todo.id; }
 
   onDeleteTodo({ id, el }: DeleteTodoEvent) {
+    const prefix = 'todoTable.row.btn.remove';
     this.todoService.deleteTodo(id)
     .pipe(
-      switchMap(() => this.translate.get('todoTable.row.btn.remove.messages.success')),
-      tap(message => this.toastr.success(message)),
+      switchMap(() => this.notifySuccess(prefix)),
       switchMap(() => this.animateRemoval$(el)),
       switchMap(() => this.todoService.refreshTodos()),
-      catchError(() =>
-        this.translate.get('todoTable.row.btn.remove.messages.error').pipe(
-          tap(message => this.toastr.error(message)),
-          switchMap(() => EMPTY),
-        )),
+      catchError(() => this.notifyError(prefix)),
       finalize(() => {
         this.todoService.setProcessing(false);
       }),
@@ -61,19 +58,28 @@ export class TodoTableComponent implements OnInit, OnDestroy {
   }
 
   onToggleComplete(ev:  CompleteTodoEvent) {
-    const key = this.getTranslationKey(ev.complete);
+    const prefix = 'todoTable.row.checkboxLabel';
+    const key = ev.complete ? 'unCompleted' : 'completed';
+
     this.todoService.toggleTodoCompletion$(ev).pipe(
-      switchMap(() => {
-        return this.translate.get(`todoTable.row.checkboxLabel.${key}.message.success`)
-      }),
-      tap((message) => this.toastr.success(message)),
+      switchMap(() => this.notifySuccess(`${prefix}.${key}`)),
       switchMap(() => this.todoService.refreshTodos()),
-      catchError(() => {
-        return this.translate.get(`todoTable.row.checkboxLabel.${key}.message.error`).pipe(
-          tap((message)=> this.toastr.error(message)),
-          switchMap(() => EMPTY),
-        )
-      }),
+      catchError(() => this.notifyError(prefix, key)),
+      finalize(() => this.todoService.setProcessing(false)),
+      takeUntil(this._destroy$),
+    ).subscribe();
+  }
+
+  onToggleEditStart(state: boolean) {
+    this.todoService.setProcessing(state);
+  }
+
+  onEditTitle(content: EditTodoTitleEvent) {
+    const prefix = 'todoTable.row.title.editInput';
+    this.todoService.editTodoTitle$(content).pipe(
+      switchMap(() => this.notifySuccess(`${prefix}`)),
+      switchMap(() => this.todoService.refreshTodos()),
+      catchError(() => this.notifyError(prefix)),
       finalize(() => this.todoService.setProcessing(false)),
       takeUntil(this._destroy$),
     ).subscribe();
@@ -87,7 +93,21 @@ export class TodoTableComponent implements OnInit, OnDestroy {
     )
   }
 
-  private getTranslationKey(isComplete: 0 | 1) {
-    return isComplete ? 'unCompleted' : 'completed';
+  private notifySuccess(prefix: string) {
+    const suffix = '.messages.success';
+
+    return this.translate.get(`${prefix}${suffix}`).pipe(
+      tap((message) => this.toastr.success(message)),
+    );
+  }
+  
+  private notifyError(prefix: string, key?: string) {
+    const suffix = '.messages.error';
+    const translationKey = prefix + (key ? '.' + key : '') + suffix;
+
+    return this.translate.get(translationKey).pipe(
+      tap((message)=> this.toastr.error(message)),
+      switchMap(() => EMPTY),
+    );
   }
 }

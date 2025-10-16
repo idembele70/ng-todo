@@ -16,6 +16,8 @@
         (delete)="onDeleteTodo($event)"
         [isProcessing]="(isProcessing$ | async) ?? false"
         (toggleComplete)="onToggleComplete($event)"
+        (editTodoTitle)="onEditTitle($event)"
+        (isEditing)="onToggleEditStart($event)"
         >
       </tr>
     </tbody>
