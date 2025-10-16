@@ -35,7 +35,7 @@
         [(ngModel)]="todo.title"
         autocomplete="off"
         (keyup.enter)="save($event)"
-        (keyup.esc)="save($event)"
+        (keyup.escape)="save($event)"
         name="editTodoTitle"
         [attr.aria-label]="'todoTable.row.title.editInput.ariaLabel' | translate">
     </ng-template>
