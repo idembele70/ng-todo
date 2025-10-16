@@ -44,7 +44,7 @@
         "editInput": {
           "ariaLabel": "Modifier le titre",
           "messages": {
-            "success": "Le tâche à été modifié avec succès !",
+            "success": "Le tâche a été modifié avec succès !",
             "error":"Une erreur est survenue lors de la modification du titre de la tâche."
           }
         }
