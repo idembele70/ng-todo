@@ -59,6 +59,7 @@ export class TodoTableRowComponent implements AfterViewInit, OnDestroy, AfterVie
   ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
+    this.unlistenMouseUp?.();
   }
 
   onDeleteTodo() {
