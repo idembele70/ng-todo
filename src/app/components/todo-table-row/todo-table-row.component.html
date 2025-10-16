@@ -30,7 +30,7 @@
       <input
         data-testid="edit-todo-title-input"
         #titleInputRef
-        [disabled]="isProcessing && !editing"
+        [disabled]="isProcessing"
         type="text"
         [(ngModel)]="todo.title"
         autocomplete="off"
