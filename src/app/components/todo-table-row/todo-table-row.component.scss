@@ -91,11 +91,6 @@ input[type="checkbox"] {
   }
 }
 
-@keyframes strike {
-    0%   { width : 0; }
-    100% { width: 100%; }
-  }
-
 .todo-text {
   position: relative;
   overflow: hidden;
@@ -111,6 +106,6 @@ input[type="checkbox"] {
     transition: width .3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
   &.strike::after {
-    width: 100%;
+   width: 100%;
   }
 }
