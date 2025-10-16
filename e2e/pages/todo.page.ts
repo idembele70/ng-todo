@@ -43,7 +43,7 @@ export class TodoPage {
 
   async blur() {
     const body = this.page.locator('body');
-    body.click({
+    await body.click({
       position:
         { x: 0, y: 0 }
     });
