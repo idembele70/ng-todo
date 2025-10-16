@@ -7,7 +7,7 @@ export class TodoTableComponent {
   private readonly tableBody = this.table.locator('tbody');
   readonly todoRows = this.tableBody.getByRole('row');
   readonly editInput = this.tableBody.getByTestId('edit-todo-title-input');
-  readonly editButton = this.tableBody.getByTestId('edit-todo-title-button')
+  readonly editButton = this.tableBody.getByTestId('edit-todo-title-button');
 
   deleteTodoBtn(title: string) {
     const row = this.todoRow(title);
