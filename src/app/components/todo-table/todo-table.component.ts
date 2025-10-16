@@ -88,6 +88,6 @@ export class TodoTableComponent implements OnInit, OnDestroy {
   }
 
   private getTranslationKey(isComplete: 0 | 1) {
-    return isComplete ? 'completed' : 'unCompleted';
+    return isComplete ? 'unCompleted' : 'completed';
   }
 }
