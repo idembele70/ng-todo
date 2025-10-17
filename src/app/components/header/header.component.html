@@ -8,6 +8,13 @@
   </div>
   <div class="controls">
     <button class="btn" type="button">{{ 'header.clear.completed' | translate }}</button>
-    <button class="btn clear-all" type="button">{{ 'header.clear.all' | translate }}</button>
+    <button
+    [disabled]="isProcessing || !hasTodos"
+    [title]="'header.clear.all.title.' + (hasTodos ? 'enabled' : 'disabled' ) | translate"
+    (click)="onDeleteAllTodos()"
+    class="btn clear-all"
+    type="button">
+      {{ 'header.clear.all.label' | translate }}
+    </button>
   </div>
 </header>

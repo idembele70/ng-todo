@@ -4,17 +4,31 @@
       "content": "Liste des tâches",
       "badge": "par @idembele70"
     },
-    "subTitle": "Ajoute, complète, édite, supprime.", 
-    "clear" : {
+    "subTitle": "Ajoute, complète, édite, supprime.",
+    "clear": {
       "completed": "Supprimer terminées",
-      "all": "Vider"
+      "all": {
+      "label": "Vider",
+      "title": {
+        "enabled": "Supprimer toutes les tâches",
+        "disabled": "Aucune tâche à supprimer"
+      },
+        "messages": {
+          "success": "Toutes vos tâches ont été supprimées avec succès !",
+          "error": "Une erreur est survenue lors de la suppression de toutes vos tâches. Réessayez."
+        }
+      }
     }
   },
   "addTodoForm": {
     "placeholder": "Nouvelle tâche...(ex: Appeler maman)",
-    "add": "Ajouter",
-    "success": "Tâche créé avec succès !",
-    "error": "Erreur lors de la création. Réessayez."
+    "add": {
+      "title": "Ajouter",
+      "messages": {
+        "success": "Tâche créée avec succès !",
+        "error": "Erreur lors de la création. Réessayez."
+      }
+    }
   },
   "todoTable": {
     "header": {
@@ -45,12 +59,12 @@
           "ariaLabel": "Modifier le titre",
           "messages": {
             "success": "La tâche a été modifiée avec succès !",
-            "error":"Une erreur est survenue lors de la modification du titre de la tâche."
+            "error": "Une erreur est survenue lors de la modification du titre de la tâche."
           }
         }
       },
       "btn": {
-        "edit" : {
+        "edit": {
           "title": "Modifier"
         },
         "remove": {

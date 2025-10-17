@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { ToastrService } from 'ngx-toastr';
+import { TranslatePipe } from '@ngx-translate/core';
+import { catchError, finalize, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { TodoService } from '../../services/todo.service';
-import { Subject, takeUntil } from 'rxjs';
+import { NotificationService } from './../../services/notification.service';
 
 @Component({
   selector: 'app-add-form',
@@ -20,8 +20,7 @@ export class AddFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly todoService: TodoService,
-    private readonly toastr: ToastrService,
-    private readonly translate: TranslateService,
+    private readonly notificationService: NotificationService,
   ) { }
 
   ngOnInit(): void {
@@ -38,19 +37,16 @@ export class AddFormComponent implements OnInit, OnDestroy {
   onAddTodo(e: Event) {
     e.preventDefault();
     if(this.isProcessing) return;
-    this.todoService.addTodo(this.todoName)
-    .subscribe({
-      next: () => {
-        const message = this.translate.instant('addTodoForm.success');
-        this.toastr.success(message);
-        this.todoName = '';
-        this.todoService.refreshTodos().subscribe();
-      },
-      error: () => {
-        const message = this.translate.instant('addTodoForm.error');
-        this.toastr.error(message);
-      }
-    })
-  }
 
+    const prefix = 'addTodoForm.add';
+    this.todoService.addTodo(this.todoName)
+    .pipe(
+      switchMap(() => this.notificationService.notifySuccess(prefix)),
+      switchMap(() => this.todoService.refreshTodos()),
+      tap(() => this.todoName = ''),
+      catchError(() => this.notificationService.notifyError(prefix)),
+      finalize(() => this.todoService.setProcessing(false)),
+    )
+    .subscribe();
+  }
 }

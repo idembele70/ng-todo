@@ -1,5 +1,5 @@
-<td>{{ todo.id }}</td>
-<td>
+<td style="width: 6%;">{{ todo.id }}</td>
+<td style="width: 56%;">
   <div class="title">
       <input
       data-testid="todo-row-checkbox"
@@ -30,7 +30,6 @@
       <input
         data-testid="edit-todo-title-input"
         #titleInputRef
-        [disabled]="isProcessing"
         type="text"
         [(ngModel)]="todo.title"
         autocomplete="off"
@@ -41,8 +40,8 @@
     </ng-template>
   </div>
 </td>
-<td class="muted">{{ todo.createdAt | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-<td>
+<td style="width: 22%;" class="muted">{{ todo.createdAt | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+<td style="width: 16%;">
   <div class="actions">
     <button
     data-testid="edit-todo-title-button"

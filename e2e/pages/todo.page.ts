@@ -1,11 +1,15 @@
 import { request, Page } from "@playwright/test";
 import { AddFormComponent } from "./components/add-form.component";
 import { TodoTableComponent } from "./components/todo-table.component";
+import HeaderComponent from "./components/header.component";
+import { i18n } from "../utils/i18n";
 
 export class TodoPage {
   constructor(private readonly page: Page) { }
+  readonly header = new HeaderComponent(this.page);
   readonly addTodoForm = new AddFormComponent(this.page);
   readonly todoTable = new TodoTableComponent(this.page);
+  readonly toastrContainer = this.page.locator('#toast-container');
 
   async goto() {
     await this.page.goto('/');
@@ -14,6 +18,12 @@ export class TodoPage {
   async addTodo(title: string) {
     await this.addTodoForm.todoInput.fill(title);
     await this.addTodoForm.addBtn.click();
+
+    const notifySuccess = this.toastrContainer.filter({ hasText: i18n.addTodoForm.add.messages.success });
+
+    await notifySuccess.waitFor({ state: 'visible' });
+    await notifySuccess.waitFor({ state: 'hidden' });
+
   }
 
   async completeTodo(title: string) {
