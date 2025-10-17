@@ -18,13 +18,12 @@ export class TodoPage {
   async addTodo(title: string) {
     await this.addTodoForm.todoInput.fill(title);
     await this.addTodoForm.addBtn.click();
-  
-    const notifySuccess = this.toastrContainer.filter({ hasText: i18n.addTodoForm.add.messages.success});
 
-    await Promise.all([
-      notifySuccess.waitFor({ state: 'visible'}),
-      notifySuccess.waitFor({ state: 'hidden'}),
-    ]);
+    const notifySuccess = this.toastrContainer.filter({ hasText: i18n.addTodoForm.add.messages.success });
+
+    await notifySuccess.waitFor({ state: 'visible' });
+    await notifySuccess.waitFor({ state: 'hidden' });
+
   }
 
   async completeTodo(title: string) {
