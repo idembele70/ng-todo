@@ -1,4 +1,4 @@
-<div class="table-wrap" aria-live="polite">
+<div *ngIf="todos?.length; else emptyContentEl" class="table-wrap" aria-live="polite">
   <table aria-describedby="desc">
     <thead>
       <tr>
@@ -11,7 +11,7 @@
     <tbody>
       <tr 
         class="todo-row"
-        *ngFor="let todo of (todos$ | async); trackBy: trackById"
+        *ngFor="let todo of todos; trackBy: trackById"
         app-todo-table-row [todo]="todo"
         (delete)="onDeleteTodo($event)"
         [isProcessing]="(isProcessing$ | async) ?? false"
@@ -24,7 +24,7 @@
   </table>
 </div>
 
-<ng-template #emptyState>
+<ng-template #emptyContentEl>
   <div class="empty">
     {{ 'todoTable.empty' | translate }}
   </div>

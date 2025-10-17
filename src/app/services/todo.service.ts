@@ -21,9 +21,14 @@ export class TodoService {
     return this.httpClient.post(`${this._baseUrl}/new`, { title });
   }
 
-  deleteTodo(id: number) {
+  deleteOneTodo$(id: number): Observable<void> {
     this.setProcessing(true);
-    return this.httpClient.delete(`${this._baseUrl}/${id}`);
+    return this.httpClient.delete<void>(`${this._baseUrl}/${id}`);
+  }
+
+  deleteAllTodos$(): Observable<void> {
+    this.setProcessing(true);
+    return this.httpClient.delete<void>(`${this._baseUrl}`);
   }
 
   toggleTodoCompletion$({ id, complete }: CompleteTodoEvent) {
