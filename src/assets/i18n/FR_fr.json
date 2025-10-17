@@ -6,7 +6,17 @@
     },
     "subTitle": "Ajoute, complète, édite, supprime.",
     "clear": {
-      "completed": "Supprimer terminées",
+      "completed": {
+        "label": "Supprimer terminées",
+        "title": {
+          "enabled": "Supprimer toutes les tâches complétées.",
+          "disabled": "Aucune tâche complétée à supprimer."
+        },
+        "messages": {
+          "success": "Toutes les tâches complétées ont étés supprimées !",
+          "error": "Une erreur est survenue lors de la suppression des tâches complétées. Réessayez."
+        }
+      },
       "all": {
       "label": "Vider",
       "title": {
@@ -14,8 +24,8 @@
         "disabled": "Aucune tâche à supprimer"
       },
         "messages": {
-          "success": "Toutes vos tâches ont été supprimées avec succès !",
-          "error": "Une erreur est survenue lors de la suppression de toutes vos tâches. Réessayez."
+          "success": "Toutes les tâches ont été supprimées avec succès !",
+          "error": "Une erreur est survenue lors de la suppression de toutes les tâches. Réessayez."
         }
       }
     }

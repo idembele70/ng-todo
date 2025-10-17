@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { TodoService } from '../../services/todo.service';
+import { catchError, combineLatest, finalize, Subject, switchMap, takeUntil } from 'rxjs';
 import { NotificationService } from '../../services/notification.service';
-import { catchError, finalize, Subject, switchMap, takeUntil } from 'rxjs';
+import { TodoService } from '../../services/todo.service';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +14,7 @@ import { catchError, finalize, Subject, switchMap, takeUntil } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
   isProcessing: boolean = false;
   hasTodos: boolean = false;
+  hasCompletedTodos: boolean = false;
 
   private readonly _destroy$ = new Subject<void>();
 
@@ -23,17 +24,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.todoService.isProcessing$.pipe(
+    combineLatest([
+      this.todoService.isProcessing$,
+      this.todoService.todos$,
+      this.todoService.hasCompletedTodos$,
+    ]).pipe(
       takeUntil(this._destroy$),
-    ).subscribe(
-      isProcessing => this.isProcessing = isProcessing
-    );
-
-    this.todoService.todos$.pipe(
-      takeUntil(this._destroy$),
-    ).subscribe(
-      todos => this.hasTodos = !!todos.length
-    );
+    ).subscribe(([isProcessing, todos, hasCompletedTodos]) =>{
+      this.isProcessing = isProcessing;
+      this.hasTodos = !!todos.length;
+      this.hasCompletedTodos = hasCompletedTodos;
+    });
   }
 
   ngOnDestroy(): void {
@@ -41,14 +42,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  onDeleteAllTodos() {
+  onDeleteAllTodos(completed: boolean) {
     if (!this.hasTodos || this.isProcessing) return;
 
-    const prefix = 'header.clear.all';
-    this.todoService.deleteAllTodos$().pipe(
-      switchMap(() => this.notificationService.notifySuccess(prefix)),
+    const prefix = 'header.clear';
+    const key = completed ? 'completed'  : 'all';
+
+    this.todoService.deleteAllTodos$(completed).pipe(
+      switchMap(() => this.notificationService.notifySuccess(`${prefix}.${key}`)),
       switchMap(() => this.todoService.refreshTodos()),
-      catchError(() => this.notificationService.notifyError(prefix)),
+      catchError(() => this.notificationService.notifyError(prefix, key)),
       finalize(() => this.todoService.setProcessing(false)),
       takeUntil(this._destroy$),
     ).subscribe();
