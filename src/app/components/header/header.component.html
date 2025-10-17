@@ -7,11 +7,18 @@
     <h5 class="muted">{{ 'header.subTitle' | translate }}</h5>
   </div>
   <div class="controls">
-    <button class="btn" type="button">{{ 'header.clear.completed' | translate }}</button>
+    <button
+      (click)="onDeleteAllTodos(true)"
+      [disabled]="isProcessing || !hasCompletedTodos"
+      [title]="'header.clear.completed.title.' + (hasCompletedTodos ? 'enabled' : 'disabled') | translate"
+      class="btn"
+      type="button">
+      {{ 'header.clear.completed.label' | translate }}
+    </button>
     <button
     [disabled]="isProcessing || !hasTodos"
     [title]="'header.clear.all.title.' + (hasTodos ? 'enabled' : 'disabled' ) | translate"
-    (click)="onDeleteAllTodos()"
+    (click)="onDeleteAllTodos(false)"
     class="btn clear-all"
     type="button">
       {{ 'header.clear.all.label' | translate }}
