@@ -14,7 +14,7 @@
         "disabled": "Aucune tâche à supprimer"
       },
         "messages": {
-          "success": "Toutes vos tâches ont été supprimé avec succès !",
+          "success": "Toutes vos tâches ont été supprimées avec succès !",
           "error": "Une erreur est survenue lors de la suppression de toutes vos tâches. Réessayez."
         }
       }
