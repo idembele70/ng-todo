@@ -25,7 +25,7 @@
     "add": {
       "title": "Ajouter",
       "messages": {
-        "success": "Tâche créé avec succès !",
+        "success": "Tâche créée avec succès !",
         "error": "Erreur lors de la création. Réessayez."
       }
     }

@@ -50,6 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       switchMap(() => this.todoService.refreshTodos()),
       catchError(() => this.notificationService.notifyError(prefix)),
       finalize(() => this.todoService.setProcessing(false)),
+      takeUntil(this._destroy$),
     ).subscribe();
   }
 }
