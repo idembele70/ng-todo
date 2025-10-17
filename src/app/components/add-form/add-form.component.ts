@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { catchError, finalize, Subject, switchMap, takeUntil } from 'rxjs';
+import { catchError, finalize, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { TodoService } from '../../services/todo.service';
 import { NotificationService } from './../../services/notification.service';
 
@@ -43,11 +43,9 @@ export class AddFormComponent implements OnInit, OnDestroy {
     .pipe(
       switchMap(() => this.notificationService.notifySuccess(prefix)),
       switchMap(() => this.todoService.refreshTodos()),
+      tap(() => this.todoName = ''),
       catchError(() => this.notificationService.notifyError(prefix)),
-      finalize(() => {
-        this.todoName = '';
-        this.todoService.setProcessing(false);
-      }),
+      finalize(() => this.todoService.setProcessing(false)),
     )
     .subscribe();
   }
