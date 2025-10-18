@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.todoService.hasCompletedTodos$,
     ]).pipe(
       takeUntil(this._destroy$),
-    ).subscribe(([isProcessing, todos, hasCompletedTodos]) =>{
+    ).subscribe(([isProcessing, todos, hasCompletedTodos]) => {
       this.isProcessing = isProcessing;
       this.hasTodos = !!todos.length;
       this.hasCompletedTodos = hasCompletedTodos;
@@ -46,7 +46,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (!this.hasTodos || this.isProcessing) return;
 
     const prefix = 'header.clear';
-    const key = completed ? 'completed'  : 'all';
+    const key = completed ? 'completed' : 'all';
 
     this.todoService.deleteAllTodos$(completed).pipe(
       switchMap(() => this.notificationService.notifySuccess(`${prefix}.${key}`)),

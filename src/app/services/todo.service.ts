@@ -67,7 +67,7 @@ export class TodoService {
 
     if (todos.length) return of(todos);
 
-    this.refreshHasCompletedTodos()
+    this.refreshHasCompletedTodos();
     return this.refreshTodos();
   }
 

@@ -65,7 +65,7 @@ test.describe('Todo Deletion', () => {
     }
     
     await expect(removeCompletedBtn).toBeEnabled();
-    await expect(removeCompletedBtn).toHaveAttribute('title', i18n.header.clear.completed.title.enabled)
+    await expect(removeCompletedBtn).toHaveAttribute('title', i18n.header.clear.completed.title.enabled);
     
     await removeCompletedBtn.click();
     await expect(todoPage.todoTable.todoRows).toHaveCount(uncompletedTodosCount);
