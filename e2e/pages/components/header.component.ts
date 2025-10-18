@@ -7,4 +7,5 @@ export default class HeaderComponent {
   }
 
   readonly removeAllButton = this.page.getByRole('button', { name: i18n.header.clear.all.label });
+  readonly removeCompletedButton = this.page.getByRole('button', { name: i18n.header.clear.completed.label });
 };
