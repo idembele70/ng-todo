@@ -46,7 +46,7 @@ test.describe('Todo Deletion', () => {
 
   test('It should delete todos marked as complete', async () => {
     const uncompletedTodosCount = 1;
-    const completedTodosTitle = ['first completed todo', 'second complete todo'];
+    const completedTodosTitle = ['first completed todo', 'second completed todo'];
     const unCompletedTodosTitle = ['first uncompleted todos'];
     const removeCompletedBtn = todoPage.header.removeCompletedButton;
 
