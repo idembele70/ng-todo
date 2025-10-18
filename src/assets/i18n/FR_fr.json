@@ -13,7 +13,7 @@
           "disabled": "Aucune tâche complétée à supprimer."
         },
         "messages": {
-          "success": "Toutes les tâches complétées ont étés supprimées !",
+          "success": "Toutes les tâches complétées ont été supprimées !",
           "error": "Une erreur est survenue lors de la suppression des tâches complétées. Réessayez."
         }
       },
