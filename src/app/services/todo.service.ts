@@ -91,19 +91,19 @@ export class TodoService {
         if (result.todos.length === 0 && currentPage > 1) {
           const previousPage = currentPage - 1;
           this.setCurrentPage(previousPage);
-         return this.refreshTodos(previousPage);
+          return this.refreshTodos(previousPage);
         }
-        return of(result)
+        return of(result);
       }),
       tap((result) => {
         this._paginationInfo$.next({
           currentPage: result.currentPage,
           totalPages: result.totalPages,
           totalItems: result.totalItems,
-        })
+        });
       }),
       tap(result => this._todos$.next(result.todos)),
-    )
+    );
   }
 
   refreshHasCompletedTodos(): void {
