@@ -1,4 +1,4 @@
-import { Todo } from "./todo.model";
+import { Todo } from './todo.model';
 
 export interface PaginatedTodos {
   currentPage: number;
