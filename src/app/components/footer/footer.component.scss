@@ -1,0 +1,13 @@
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+  margin-top: 1rem;
+  user-select: none;
+  font-size: .9rem;
+}
+
+footer .btn {
+  padding: .4rem .7rem;
+}

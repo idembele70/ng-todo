@@ -1,0 +1,15 @@
+<footer>
+  <button
+  [disabled]="isPreviousPageDisabled || isProcessing"
+  (click)="onNavigate(currentPage - step)"
+  [title]="('footer.button.previous.title.' +
+  (isPreviousPageDisabled ? 'disabled' : 'enabled' )) | translate"
+  class="btn">{{ 'footer.button.previous.label' | translate }}</button>
+  <span class="muted">{{ pageInfo }}</span>
+  <button
+  [disabled]="isNextPageDisabled || isProcessing"
+  (click)="onNavigate(currentPage + step)"
+  [title]="('footer.button.next.title.' +
+  (isNextPageDisabled ? 'disabled' : 'enabled' )) | translate"
+  class="btn">{{ 'footer.button.next.label' | translate }}</button>
+</footer>

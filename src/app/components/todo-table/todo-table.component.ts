@@ -1,9 +1,10 @@
 import { AsyncPipe, NgFor, NgIf } from "@angular/common";
 import { Component, inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { catchError, finalize, fromEvent, race, Subject, switchMap, take, takeUntil, timer } from "rxjs";
+import { catchError, combineLatest, finalize, fromEvent, race, Subject, switchMap, take, takeUntil, timer } from "rxjs";
 import { CompleteTodoEvent } from "../../models/complete-todo-event.model";
 import { EditTodoTitleEvent } from "../../models/edit-todo-title-event.model";
+import { PaginationInfo } from "../../models/paginated-todos.model";
 import { Todo } from "../../models/todo.model";
 import { TodoService } from '../../services/todo.service';
 import { DeleteTodoEvent, TodoTableRowComponent } from "../todo-table-row/todo-table-row.component";
@@ -23,18 +24,28 @@ export class TodoTableComponent implements OnInit, OnDestroy {
   private readonly _destroy$ = new Subject<void>();
   
   todos: Todo[] = [];
+  pageInfo: PaginationInfo = {
+    currentPage: 1,
+    totalItems: 0,
+    totalPages: 0,
+  };
+
   readonly isProcessing$ = this.todoService.isProcessing$;
 
   private readonly ANIMATION_TIMEOUT = 2_000;
 
   ngOnInit(): void {
-    this.todoService.todos$
-    .pipe(takeUntil(this._destroy$))
-    .subscribe(todos => this.todos = todos);
+    this.todoService.refreshTodos(1).pipe(take(1)).subscribe();
 
-    this.todoService.refreshTodos()
-      .pipe(takeUntil(this._destroy$))
-      .subscribe();
+    combineLatest([
+      this.todoService.paginationInfo$,
+      this.todoService.todos$,
+    ])
+    .pipe(takeUntil(this._destroy$))
+    .subscribe(([pageInfo, todos]) => {
+      this.todos = todos;
+      this.pageInfo = pageInfo;
+    });
   }
 
   trackById(_: number, todo: Todo) { return todo.id; }
@@ -45,7 +56,7 @@ export class TodoTableComponent implements OnInit, OnDestroy {
     .pipe(
       switchMap(() => this.notificationService.notifySuccess(prefix)),
       switchMap(() => this.animateRemoval$(el)),
-      switchMap(() => this.todoService.refreshTodos()),
+      switchMap(() => this.todoService.refreshTodos(this.pageInfo.currentPage)),
       catchError(() => this.notificationService.notifyError(prefix)),
       finalize(() => {
         this.todoService.setProcessing(false);
@@ -66,7 +77,7 @@ export class TodoTableComponent implements OnInit, OnDestroy {
 
     this.todoService.toggleTodoCompletion$(ev).pipe(
       switchMap(() => this.notificationService.notifySuccess(`${prefix}.${key}`)),
-      switchMap(() => this.todoService.refreshTodos()),
+      switchMap(() => this.todoService.refreshTodos(this.pageInfo.currentPage)),
       catchError(() => this.notificationService.notifyError(prefix, key)),
       finalize(() => this.todoService.setProcessing(false)),
       takeUntil(this._destroy$),
@@ -81,7 +92,7 @@ export class TodoTableComponent implements OnInit, OnDestroy {
     const prefix = 'todoTable.row.title.editInput';
     this.todoService.editTodoTitle$(content).pipe(
       switchMap(() => this.notificationService.notifySuccess(`${prefix}`)),
-      switchMap(() => this.todoService.refreshTodos()),
+      switchMap(() => this.todoService.refreshTodos(this.pageInfo.currentPage)),
       catchError(() => this.notificationService.notifyError(prefix)),
       finalize(() => this.todoService.setProcessing(false)),
       takeUntil(this._destroy$),

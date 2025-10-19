@@ -87,5 +87,26 @@
       }
     },
     "empty": "Aucune tâche — ajoute la première !"
+  },
+  "footer": {
+    "button": {
+      "previous": {
+        "label": "Précédent",
+        "title": {
+          "enabled": "Aller à la page précédente.",
+          "disabled": "Navigation vers la page précédente impossible."
+        }
+      },
+      "next": {
+        "label": "Suivant",
+        "title": {
+          "enabled": "Aller à la page suivante.",
+          "disabled": "Navigation vers la page suivante impossible."
+        }
+      }
+    },
+    "messages": {
+      "error": "Une erreur est survenue lors de la navigation. Veuillez réessayer."
+    }
   }
 }
