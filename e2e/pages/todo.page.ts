@@ -1,14 +1,17 @@
-import { request, Page } from "@playwright/test";
-import { AddFormComponent } from "./components/add-form.component";
-import { TodoTableComponent } from "./components/todo-table.component";
-import HeaderComponent from "./components/header.component";
+import { Page, request } from "@playwright/test";
 import { i18n } from "../utils/i18n";
+import { AddFormComponent } from "./components/add-form.component";
+import FooterComponent from "./components/footer.component";
+import HeaderComponent from "./components/header.component";
+import { TodoTableComponent } from "./components/todo-table.component";
 
 export class TodoPage {
   constructor(private readonly page: Page) { }
   readonly header = new HeaderComponent(this.page);
   readonly addTodoForm = new AddFormComponent(this.page);
   readonly todoTable = new TodoTableComponent(this.page);
+  readonly footer = new FooterComponent(this.page);
+
   readonly toastrContainer = this.page.locator('#toast-container');
 
   async goto() {

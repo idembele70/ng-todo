@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { catchError, finalize, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { catchError, combineLatest, finalize, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { PaginationInfo } from '../../models/paginated-todos.model';
 import { TodoService } from '../../services/todo.service';
 import { NotificationService } from './../../services/notification.service';
 
@@ -17,6 +18,11 @@ export class AddFormComponent implements OnInit, OnDestroy {
   isProcessing!: boolean;
 
   private readonly _destroy$ = new Subject<void>();
+  pageInfo: PaginationInfo = {
+    currentPage: 1,
+    totalItems: 0,
+    totalPages: 0,
+  };
 
   constructor(
     private readonly todoService: TodoService,
@@ -24,29 +30,35 @@ export class AddFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-      this.todoService.isProcessing$
+    combineLatest([
+      this.todoService.isProcessing$,
+      this.todoService.paginationInfo$,
+    ])
       .pipe(takeUntil(this._destroy$))
-      .subscribe(value => this.isProcessing = value);
+      .subscribe(([isProcessing, pageInfo]) => {
+        this.isProcessing = isProcessing;
+        this.pageInfo = pageInfo;
+      });
   }
 
   ngOnDestroy(): void {
-      this._destroy$.next();
-      this._destroy$.complete();
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   onAddTodo(e: Event) {
     e.preventDefault();
-    if(this.isProcessing) return;
+    if (this.isProcessing) return;
 
     const prefix = 'addTodoForm.add';
     this.todoService.addTodo(this.todoName)
-    .pipe(
-      switchMap(() => this.notificationService.notifySuccess(prefix)),
-      switchMap(() => this.todoService.refreshTodos()),
-      tap(() => this.todoName = ''),
-      catchError(() => this.notificationService.notifyError(prefix)),
-      finalize(() => this.todoService.setProcessing(false)),
-    )
-    .subscribe();
+      .pipe(
+        switchMap(() => this.notificationService.notifySuccess(prefix)),
+        switchMap(() => this.todoService.refreshTodos(this.pageInfo.currentPage)),
+        tap(() => this.todoName = ''),
+        catchError(() => this.notificationService.notifyError(prefix)),
+        finalize(() => this.todoService.setProcessing(false)),
+      )
+      .subscribe();
   }
 }

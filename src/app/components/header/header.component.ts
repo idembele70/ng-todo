@@ -3,6 +3,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { catchError, combineLatest, finalize, Subject, switchMap, takeUntil } from 'rxjs';
 import { NotificationService } from '../../services/notification.service';
 import { TodoService } from '../../services/todo.service';
+import { PaginationInfo } from '../../models/paginated-todos.model';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isProcessing: boolean = false;
   hasTodos: boolean = false;
   hasCompletedTodos: boolean = false;
+  pageInfo: PaginationInfo = {
+    currentPage: 1,
+    totalItems: 0,
+    totalPages: 0,
+  };
 
   private readonly _destroy$ = new Subject<void>();
 
@@ -28,12 +34,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.todoService.isProcessing$,
       this.todoService.todos$,
       this.todoService.hasCompletedTodos$,
+      this.todoService.paginationInfo$,
     ]).pipe(
       takeUntil(this._destroy$),
-    ).subscribe(([isProcessing, todos, hasCompletedTodos]) => {
+    ).subscribe(([isProcessing, todos, hasCompletedTodos, pageInfo]) => {
       this.isProcessing = isProcessing;
       this.hasTodos = !!todos.length;
       this.hasCompletedTodos = hasCompletedTodos;
+      this.pageInfo = pageInfo;
     });
   }
 
@@ -50,7 +58,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.todoService.deleteAllTodos$(completed).pipe(
       switchMap(() => this.notificationService.notifySuccess(`${prefix}.${key}`)),
-      switchMap(() => this.todoService.refreshTodos()),
+      switchMap(() => this.todoService.refreshTodos(this.pageInfo.currentPage)),
       catchError(() => this.notificationService.notifyError(prefix, key)),
       finalize(() => this.todoService.setProcessing(false)),
       takeUntil(this._destroy$),
