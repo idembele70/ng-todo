@@ -50,7 +50,7 @@ export class FooterComponent implements OnInit, OnDestroy {
         finalize(() => this.todoService.setProcessing(false)),
         takeUntil(this._destroy$),
       )
-      .subscribe()
+      .subscribe();
   }
 
   ngOnDestroy(): void {
