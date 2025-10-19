@@ -2,9 +2,9 @@ import { Page } from "@playwright/test";
 import { i18n } from "../../utils/i18n";
 
 export class TodoTableComponent {
-  constructor(private readonly page: Page) {}
+  constructor(private readonly page: Page) {};
 
-  readonly container = this.page.locator('app-todo-table')
+  readonly container = this.page.locator('app-todo-table');
   readonly table = this.container.locator('table');
   private readonly tableBody = this.table.locator('tbody');
   readonly todoRows = this.tableBody.getByRole('row');
