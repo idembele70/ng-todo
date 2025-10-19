@@ -34,8 +34,8 @@ export class FooterComponent implements OnInit, OnDestroy {
       )
       .subscribe(([pageInfo, isProcessing]) => {
         this.currentPage = pageInfo.currentPage;
-        this.isPreviousPageDisabled = pageInfo.currentPage == 1;
-        this.isNextPageDisabled = pageInfo.currentPage == pageInfo.totalPages;
+        this.isPreviousPageDisabled = pageInfo.currentPage === 1;
+        this.isNextPageDisabled = pageInfo.currentPage === pageInfo.totalPages;
         this.pageInfo = `Page ${pageInfo.currentPage} / ${pageInfo.totalPages}`;
 
         this.isProcessing = isProcessing;
@@ -48,6 +48,7 @@ export class FooterComponent implements OnInit, OnDestroy {
       .pipe(
         catchError(() => this.notificationService.notifyError(prefix)),
         finalize(() => this.todoService.setProcessing(false)),
+        takeUntil(this._destroy$),
       )
       .subscribe()
   }
