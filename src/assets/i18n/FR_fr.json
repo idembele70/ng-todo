@@ -18,11 +18,11 @@
         }
       },
       "all": {
-      "label": "Vider",
-      "title": {
-        "enabled": "Supprimer toutes les tâches",
-        "disabled": "Aucune tâche à supprimer"
-      },
+        "label": "Vider",
+        "title": {
+          "enabled": "Supprimer toutes les tâches",
+          "disabled": "Aucune tâche à supprimer"
+        },
         "messages": {
           "success": "Toutes les tâches ont été supprimées avec succès !",
           "error": "Une erreur est survenue lors de la suppression de toutes les tâches. Réessayez."
@@ -32,7 +32,14 @@
   },
   "addTodoForm": {
     "placeholder": "Nouvelle tâche...(ex: Appeler maman)",
-    "add": {
+    "input": {
+      "whitespace": {
+        "messages": {
+          "error": "Le titre ne peut pas contenir uniquement des espaces."
+        }
+      }
+    },
+    "button": {
       "title": "Ajouter",
       "messages": {
         "success": "Tâche créée avec succès !",
@@ -65,6 +72,10 @@
         }
       },
       "title": {
+        "editing": {
+          "idle": "Double-cliquez pour modifier le titre.",
+          "active": "Appuyer sur Entrée, Échap ou cliquez ailleurs (hors champs désactivé) pour enregistrer votre modification."
+        },
         "editInput": {
           "ariaLabel": "Modifier le titre",
           "messages": {

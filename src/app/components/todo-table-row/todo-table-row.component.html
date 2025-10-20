@@ -1,6 +1,11 @@
 <td style="width: 6%;">{{ todo.id }}</td>
 <td style="width: 56%;">
-  <div class="title">
+  <div
+    [attr.data-testid]="'title-' + todo.title"
+    [title]="(editing 
+      ? 'todoTable.row.title.editing.active'
+      : 'todoTable.row.title.editing.idle') | translate"
+    class="title">
       <input
       data-testid="todo-row-checkbox"
       [disabled]="isProcessing"
@@ -8,6 +13,9 @@
       [checked]="!!todo.complete"
       (click)="onToggleComplete($event)"
       type="checkbox"
+      [title]="(!!todo.complete
+        ? 'todoTable.row.checkboxLabel.completed.title'
+        : 'todoTable.row.checkboxLabel.unCompleted.title') | translate"
       [attr.aria-checked]="!!todo.complete"
       [attr.aria-label]="(todo.complete 
         ? 'todoTable.row.checkboxLabel.completed.title'
@@ -36,6 +44,7 @@
         (keyup.enter)="save($event)"
         (keyup.escape)="save($event)"
         name="editTodoTitle"
+        maxlength="40"
         [attr.aria-label]="'todoTable.row.title.editInput.ariaLabel' | translate">
     </ng-template>
   </div>
