@@ -1,4 +1,4 @@
-import { Page, request } from "@playwright/test";
+import { expect, Page, request } from "@playwright/test";
 import { i18n } from "../utils/i18n";
 import { AddFormComponent } from "./components/add-form.component";
 import FooterComponent from "./components/footer.component";
@@ -22,7 +22,7 @@ export class TodoPage {
     await this.addTodoForm.todoInput.fill(title);
     await this.addTodoForm.addBtn.click();
 
-    const notifySuccess = this.toastrContainer.filter({ hasText: i18n.addTodoForm.add.messages.success });
+    const notifySuccess = this.toastrContainer.filter({ hasText: i18n.addTodoForm.button.messages.success });
 
     await notifySuccess.waitFor({ state: 'visible' });
     await notifySuccess.waitFor({ state: 'hidden' });
@@ -60,5 +60,27 @@ export class TodoPage {
       position:
         { x: 0, y: 0 }
     });
+  }
+
+  async assertNotification(message: string) {
+    const notificationLocator = this.toastrContainer.filter({ hasText: message });
+
+    await notificationLocator.waitFor({ state: 'visible' });
+    await notificationLocator.waitFor({ state: 'hidden' });
+  }
+
+  async assertDefaultTodoState(title: string) {
+    const todoTitle = this.todoTable.todoTitle(title);
+    await expect(todoTitle).toHaveAttribute('title', i18n.todoTable.row.title.editing.idle);
+    const checkbox = this.todoTable.completeCheckbox(title);
+    await expect(checkbox).toHaveAttribute('title', i18n.todoTable.row.checkboxLabel.unCompleted.title);
+  }
+
+  async assertTodoTitleInEditingState(title: string) {
+    const todoTitle = this.todoTable.todoTitle(title);
+    await expect(todoTitle).toBeVisible();
+    await expect(todoTitle).toHaveAttribute('title', i18n.todoTable.row.title.editing.active);
+    await expect(this.todoTable.editInput).toBeVisible();
+    await expect(this.todoTable.editInput).toHaveValue(title);
   }
 }

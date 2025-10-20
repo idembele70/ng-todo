@@ -1,5 +1,5 @@
 import { DatePipe, NgIf } from '@angular/common';
-import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, Renderer2, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { interval, Subject, takeUntil, tap } from 'rxjs';
@@ -39,6 +39,7 @@ export class TodoTableRowComponent implements AfterViewInit, OnDestroy, AfterVie
   constructor(
     private readonly el: ElementRef<HTMLTableRowElement>,
     private readonly renderer: Renderer2,
+    private readonly cdr: ChangeDetectorRef,
   ) { }
 
   ngAfterViewChecked() {
@@ -84,7 +85,8 @@ export class TodoTableRowComponent implements AfterViewInit, OnDestroy, AfterVie
     if (this.isProcessing || this.editing) return;
     this.editing = true;
     this.isEditing.emit(true);
-    this.previousTitle = this.todo.title;
+    this.cdr.markForCheck();
+    this.previousTitle = this.todo.title.trim();
     this.unlistenMouseUp = this.renderer.listen('window', 'mouseup', (event: Event) => this.save(event));
   }
 
@@ -92,24 +94,29 @@ export class TodoTableRowComponent implements AfterViewInit, OnDestroy, AfterVie
     const inputElName = 'editTodoTitle';
     const target = ev.target as HTMLInputElement;
     const keyboardEvent = ev as KeyboardEvent;
-
     if (
       target.name === inputElName && 
-       ev.type === 'keyup' &&
+       (ev.type === 'keyup' || ev.type === 'mouseup' ) &&
       !['Enter', 'Escape'].includes(keyboardEvent.key)
     ) return;
 
     this.unlistenMouseUp?.();
     this.editing = false;
+    this.cdr.markForCheck();
     this.isEditing.emit(false);
-    if (this?.previousTitle === this.todo.title) return;
-    if (!this.todo.title) {
+    const trimmedTitle = this.todo.title.trim();
+
+    if (this.previousTitle === trimmedTitle ) {
+      this.todo.title = trimmedTitle;
+      return;
+    };
+    if (!trimmedTitle) {
       this.todo.title = this.previousTitle!;
       return;
     }
     this.editTodoTitle.emit({
       id: this.todo.id,
-      title: this.todo.title,
+      title: trimmedTitle,
     });
   }
 }

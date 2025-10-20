@@ -23,17 +23,21 @@ export class TodoTableComponent {
     return row.getByTestId('todo-row-checkbox');
   }
 
-  todoTitleWrapper(title: string) {
+  todoTextWrapper(title: string) {
     const row = this.todoRow(title);
     return row.getByTestId('todo-text-wrapper');
   }
 
-  todoTitle(title: string) {
+  todoText(title: string) {
     const row = this.todoRow(title);
     return row.getByTestId('todo-text');
   }
 
+  todoTitle(title: string) {
+    return this.todoRows.getByTestId(`title-${title}`);
+  }
+
   todoRow(title: string) {
-    return this.todoRows.filter({ hasText: title});
+    return this.todoRows.filter({ hasText: title });
   }
 }

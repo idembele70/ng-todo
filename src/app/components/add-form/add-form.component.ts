@@ -50,13 +50,22 @@ export class AddFormComponent implements OnInit, OnDestroy {
     e.preventDefault();
     if (this.isProcessing) return;
 
-    const prefix = 'addTodoForm.add';
-    this.todoService.addTodo(this.todoName)
+    const inputPrefix = 'addTodoForm.input';
+    const trimmedName = this.todoName.trim();
+    if(!trimmedName) {
+      this.notificationService.notifyError(`${inputPrefix}.whitespace`)
+      .pipe(takeUntil(this._destroy$))
+      .subscribe();
+      return;
+    }
+
+    const buttonPrefix = 'addTodoForm.button';
+    this.todoService.addTodo(trimmedName)
       .pipe(
-        switchMap(() => this.notificationService.notifySuccess(prefix)),
+        switchMap(() => this.notificationService.notifySuccess(buttonPrefix)),
         switchMap(() => this.todoService.refreshTodos(this.pageInfo.currentPage)),
         tap(() => this.todoName = ''),
-        catchError(() => this.notificationService.notifyError(prefix)),
+        catchError(() => this.notificationService.notifyError(buttonPrefix)),
         finalize(() => this.todoService.setProcessing(false)),
       )
       .subscribe();
