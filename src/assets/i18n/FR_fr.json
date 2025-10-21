@@ -37,6 +37,11 @@
         "messages": {
           "error": "Le titre ne peut pas contenir uniquement des espaces."
         }
+      },
+      "existing": {
+        "messages": {
+          "error": "Ce titre de tâche est déjà utilisé."
+        }
       }
     },
     "button": {

@@ -1,5 +1,6 @@
 import test, { expect, Locator, Page } from "@playwright/test";
 import { TodoPage } from "./pages/todo.page";
+import { i18n } from "./utils/i18n";
 
 test.describe.serial('Edit Todo Title', () => {
   let page: Page;
@@ -70,14 +71,18 @@ test.describe.serial('Edit Todo Title', () => {
     test.beforeEach(async () => {
       await todoPage.addTodo(TODO_TITLE);
       await todoTextWrapper.dblclick();
-      await editInput.fill(TODO_TITLE_EDITED);
-    })
+      await Promise.all([
+        editInput.fill(TODO_TITLE_EDITED),
+        todoPage.todoTable.editInputSpinner.waitFor({ state: 'visible' }),
+      ]);
+      await todoPage.todoTable.editInputSpinner.waitFor({ state: 'hidden' });
+    });
 
     test.afterEach(async () => {
       await todoPage.deleteTodo(TODO_TITLE_EDITED);
       const row = todoPage.todoTable.todoRow(TODO_TITLE_EDITED);
       await row.waitFor({ state: 'hidden' });
-    })
+    });
 
     test('It should edit title and press Enter', async () => {
       await editInput.press('Enter');
@@ -87,21 +92,30 @@ test.describe.serial('Edit Todo Title', () => {
 
     test('It should edit title and press Escape', async () => {
       await editInput.press('Escape');
+      await todoPage.assertNotification(i18n.todoTable.row.title.editInput.messages.success);
       await expect(todoText).toBeVisible();
       await expect(todoText).toHaveText(TODO_TITLE_EDITED);
     });
 
     test('It should edit title and blur', async () => {
       await todoPage.blur();
+      await todoPage.assertNotification(i18n.todoTable.row.title.editInput.messages.success);
       await expect(todoText).toBeVisible();
       await expect(todoText).toHaveText(TODO_TITLE_EDITED);
     });
   });
+
   test('It should keep previous title if user save with empty title', async () => {
     await todoPage.addTodo(TODO_TITLE_EDITED);
     await editButton.click();
     await editInput.clear();
     await editInput.press('Enter');
     await expect(todoText).toHaveText(TODO_TITLE_EDITED);
+  });
+
+  test('It should prevent duplicate title during edition', async () => {
+    await todoPage.addTodoForm.todoInput.fill(TODO_TITLE_EDITED);
+    await todoPage.assertNotification(i18n.addTodoForm.input.existing.messages.error);
+    await todoPage.assertTodoRowControlsEnabled(TODO_TITLE_EDITED);
   });
 })

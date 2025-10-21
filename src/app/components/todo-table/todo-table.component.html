@@ -1,4 +1,4 @@
-<div *ngIf="todos?.length; else emptyContentEl" class="table-wrap" aria-live="polite">
+<div *ngIf="todos?.length; else loadingContentEl" class="table-wrap" aria-live="polite">
   <table aria-describedby="desc">
     <thead>
       <tr>
@@ -9,21 +9,22 @@
       </tr>
     </thead>
     <tbody>
-      <tr 
-        class="todo-row"
-        *ngFor="let todo of todos; trackBy: trackById"
-        app-todo-table-row [todo]="todo"
-        (delete)="onDeleteTodo($event)"
-        [isProcessing]="(isProcessing$ | async) ?? false"
-        (toggleComplete)="onToggleComplete($event)"
-        (editTodoTitle)="onEditTitle($event)"
-        (isEditing)="onToggleEditStart($event)"
-        >
+      <tr class="todo-row" *ngFor="let todo of todos; trackBy: trackById" app-todo-table-row [todo]="todo"
+        (delete)="onDeleteTodo($event)" [isProcessing]="(isProcessing$ | async) ?? false"
+        (toggleComplete)="onToggleComplete($event)" (editTodoTitle)="onEditTitle($event)"
+        (toggleEditStart)="onToggleEditStart($event)" [searching]="searchingId === todo.id">
       </tr>
     </tbody>
   </table>
 </div>
 
+<ng-template #loadingContentEl>
+  <ng-container *ngIf="(loading$ | async) as loading; else emptyContentEl;">
+    <div class="spinner-container">
+      <div class="spinner" [isLoading]="loading" [size]="3"></div>
+    </div>
+  </ng-container>
+</ng-template>
 <ng-template #emptyContentEl>
   <div class="empty">
     {{ 'todoTable.empty' | translate }}

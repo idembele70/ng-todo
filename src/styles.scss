@@ -69,3 +69,11 @@ body {
     font-size: .78rem;
   }
 } 
+
+.spinner {
+  right: .5rem;
+  top: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+}

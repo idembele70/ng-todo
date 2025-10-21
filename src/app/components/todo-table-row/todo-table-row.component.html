@@ -38,6 +38,7 @@
       <input
         data-testid="edit-todo-title-input"
         #titleInputRef
+        #titleInputModel="ngModel"
         type="text"
         [(ngModel)]="todo.title"
         autocomplete="off"
@@ -46,6 +47,9 @@
         name="editTodoTitle"
         maxlength="40"
         [attr.aria-label]="'todoTable.row.title.editInput.ariaLabel' | translate">
+        <div
+          class="spinner"
+          [isLoading]="searching"></div>
     </ng-template>
   </div>
 </td>

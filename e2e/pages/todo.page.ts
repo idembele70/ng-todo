@@ -26,7 +26,7 @@ export class TodoPage {
 
     await notifySuccess.waitFor({ state: 'visible' });
     await notifySuccess.waitFor({ state: 'hidden' });
-
+    
   }
 
   async completeTodo(title: string) {
@@ -82,5 +82,35 @@ export class TodoPage {
     await expect(todoTitle).toHaveAttribute('title', i18n.todoTable.row.title.editing.active);
     await expect(this.todoTable.editInput).toBeVisible();
     await expect(this.todoTable.editInput).toHaveValue(title);
+  }
+
+  async assertAllControlsDisabled(title: string) {
+    const checkbox = this.todoTable.completeCheckbox(title);
+    const deleteBtn = this.todoTable.deleteTodoBtn(title);
+
+    await Promise.all([
+      expect(this.addTodoForm.addBtn).toBeDisabled(),
+      expect(this.header.removeAllButton).toBeDisabled(),
+      expect(this.header.removeCompletedButton).toBeDisabled(),
+      expect(checkbox).toBeDisabled(),
+      expect(this.todoTable.editButton).toBeDisabled(),
+      expect(deleteBtn).toBeDisabled(),
+      expect(this.footer.previousButton).toBeDisabled(),
+      expect(this.footer.nextButton).toBeDisabled(),
+    ]);
+  }
+  
+  async assertTodoRowControlsEnabled(title: string) {
+    const checkbox = this.todoTable.completeCheckbox(title);
+    const deleteBtn = this.todoTable.deleteTodoBtn(title);
+    const editBtn = this.todoTable.editButton;
+    const todoTitle = this.todoTable.todoTitle(title);
+
+    await Promise.all([
+      expect(checkbox).toBeEnabled(),
+      expect(todoTitle).toHaveAttribute('title', i18n.todoTable.row.title.editing.idle),
+      expect(editBtn).toBeEnabled(),
+      expect(deleteBtn).toBeEnabled(),
+    ]);
   }
 }

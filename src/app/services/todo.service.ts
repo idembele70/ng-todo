@@ -127,4 +127,12 @@ export class TodoService {
 
     return this.refreshTodos(currentPage);
   }
+
+  todoExistsByTitle(title: string): Observable<{ exists: boolean }> {
+    this.setProcessing(true);
+    const params = new HttpParams()
+      .set('title', title);
+
+    return this.httpClient.get<{ exists: boolean }>(`${this._baseUrl}/exists`, { params });
+  }
 }
