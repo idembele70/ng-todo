@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) { }
   
   ngOnInit(): void {
-    const valueChanges$ = this.langSelectModel.valueChanges ?? of(this.currentLang$);
+    const valueChanges$ = this.langSelectModel.valueChanges ?? this.currentLang$;
 
     combineLatest([
       this.todoService.isProcessing$,
