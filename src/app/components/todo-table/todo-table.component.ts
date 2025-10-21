@@ -44,7 +44,7 @@ export class TodoTableComponent implements OnInit, OnDestroy {
     this.loading$.next(true)
     this.todoService.refreshTodos(1).pipe(
       take(1),
-      finalize(() => {this.loading$.next(false)}),
+      finalize(() => this.loading$.next(false)),
     ).subscribe();
 
     combineLatest([
