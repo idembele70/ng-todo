@@ -38,7 +38,7 @@ export class TodoTableRowComponent implements AfterViewInit, OnDestroy, AfterVie
   private previousTitle: string = '';
   private readonly _destroy$ = new Subject<void>();
   private unlistenMouseUp?: () => void;
-  private titleInputControl?: FormControl<HTMLInputElement>;
+  private titleInputControl?: FormControl<string>;
 
 
   constructor(

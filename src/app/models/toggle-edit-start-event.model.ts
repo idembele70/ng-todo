@@ -3,7 +3,7 @@ import { FormControl } from "@angular/forms";
 
 export interface ToggleEditStartEvent {
   state: boolean;
-  control: FormControl<HTMLInputElement>;
+  control: FormControl<string>;
   cdr: ChangeDetectorRef;
   id: number;
 }
