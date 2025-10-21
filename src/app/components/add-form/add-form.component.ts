@@ -70,9 +70,7 @@ export class AddFormComponent implements OnInit, OnDestroy, AfterViewInit {
         if (status === 'INVALID' && this.todoInput.hasError('titleExists'))
           return this.notificationService.notifyError('addTodoForm.input.existing');
         return EMPTY;
-
       }),
-    ).pipe(
       takeUntil(this._statusChangeSubscription$),
     ).subscribe();
   }
