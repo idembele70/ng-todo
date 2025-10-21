@@ -9,7 +9,7 @@ test.describe('Todo Pagination', () => {
   const INITIAL_TODO_COUNT = 0;
   const TODO_COUNT_AFTER_ADDITION = 11;
   const TODO_COUNT_AFTER_SINGLE_REMOVAL = 10;
-  const LAST_TODO_TITLE = 'Todo 10';
+  const LAST_TODO_TITLE = 'Todo 0';
 
   test.beforeAll(async ({ browser }) => {
     await TodoPage.resetDB();
@@ -62,10 +62,12 @@ test.describe('Todo Pagination', () => {
   });
 
   test('It should redirect to page 1 after deleting all todos on page 2', async () => {
+    let currentPage = 2;
     await todoPage.footer.nextButton.click();
+    await todoPage.footer.assertNextButtonIsDisabled();
+    await todoPage.footer.assertPageInfoText(currentPage, TODO_COUNT_AFTER_ADDITION);
 
-    const currentPage = 1;
-
+    currentPage = 1;
     await todoPage.deleteTodo(LAST_TODO_TITLE);
 
     await todoPage.footer.assertPreviousButtonIsDisabled();
