@@ -127,7 +127,7 @@ export class TodoTableRowComponent implements AfterViewInit, OnDestroy, AfterVie
     this.cdr.markForCheck();
     this.toggleEditStart.emit({
       id: this.todo.id,
-      state: true,
+      state: false,
       control: this.titleInputControl!,
       cdr: this.cdr,
     });
