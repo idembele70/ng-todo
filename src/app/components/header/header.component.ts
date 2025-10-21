@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   readonly currentLang$ = this.langService.currentLang$;
   readonly availableLang$ = this.langService.supportedLang$;
 
-  @ViewChild('langSelectModel', { static: true }) readonly langSelectModel!: NgModel;
+  @ViewChild('langSelectModel') readonly langSelectModel!: NgModel;
 
   constructor(
     readonly todoService: TodoService,
