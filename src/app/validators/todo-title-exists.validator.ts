@@ -8,8 +8,7 @@ export function todoTitleExistsValidator(todoService: TodoService): AsyncValidat
     if (!todoTitle) return of(null);
 
     return timer(100).pipe(
-      switchMap(() => of(todoTitle)),
-      switchMap((t) => todoService.todoExistsByTitle(t.trim())),
+      switchMap(() => todoService.todoExistsByTitle(todoTitle.trim())),
       map(({ exists }) => exists ? { titleExists: true } : null),
       catchError(() => of(null)),
     );
