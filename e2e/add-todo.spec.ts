@@ -4,10 +4,10 @@ import { i18n } from "./utils/i18n";
 
 test.describe('It should add a new todo', () => {
   test.describe.configure({ mode: 'serial' })
-  
+
   let page: Page;
   let todoPage: TodoPage;
- 
+
   test.beforeAll(async ({ browser }) => {
     await TodoPage.resetDB();
 
@@ -25,10 +25,11 @@ test.describe('It should add a new todo', () => {
   test('It should add a todo when pressing Enter', async () => {
     const title = 'My first todo';
     const todoCount = 1;
-  
+
     await todoPage.addTodoForm.todoInput.fill(title);
+    await expect(todoPage.addTodoForm.addBtn).toBeEnabled();
     await todoPage.addTodoForm.todoInput.press('Enter');
-    
+
     await expect(todoPage.todoTable.todoRows).toHaveCount(todoCount);
     await todoPage.assertDefaultTodoState(title);
   });
@@ -39,7 +40,8 @@ test.describe('It should add a new todo', () => {
 
     await todoPage.addTodoForm.todoInput.fill(title);
     await todoPage.addTodoForm.addBtn.click();
-    await expect(todoPage.todoTable.todoRows).toHaveCount(todoCount)
+    await expect(todoPage.todoTable.todoRows).toHaveCount(todoCount);
+
   });
 
   test('It should reject todo title containing only whitespace', async () => {
@@ -65,7 +67,7 @@ test.describe('It should add a new todo', () => {
     await expect(todoText).toHaveText(trimmedTitle);
     await expect(todoPage.todoTable.todoRows).toHaveCount(todoCount);
   });
- 
+
   test('It should truncate todo title longer than 40 characters', async () => {
     const tooLongTitle = 'This title contains more than 40 characters';
     const expectedTitle = 'This title contains more than 40 charact';
@@ -91,4 +93,18 @@ test.describe('It should add a new todo', () => {
     const maxLength = 40;
     expect(todoTitleLength).toBe(maxLength);
   });
-})
+
+  test('It should prevent creating a duplicate todo', async () => {
+    await TodoPage.resetDB();
+    const title = 'duplicate todo';
+    await todoPage.addTodo(title);
+
+    await todoPage.addTodoForm.todoInput.fill(title);
+    await expect(todoPage.addTodoForm.spinner).toBeVisible();
+    await expect(todoPage.addTodoForm.spinner).toBeHidden();
+    await todoPage.addTodoForm.todoInput.press('Enter');
+
+    await todoPage.assertNotification(i18n.addTodoForm.input.existing.messages.error);
+    await todoPage.assertTodoRowControlsEnabled(title);
+  });
+});

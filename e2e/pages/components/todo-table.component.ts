@@ -9,6 +9,7 @@ export class TodoTableComponent {
   private readonly tableBody = this.table.locator('tbody');
   readonly todoRows = this.tableBody.getByRole('row');
   readonly editInput = this.tableBody.getByTestId('edit-todo-title-input');
+  readonly editInputSpinner = this.tableBody.locator('.spinner');
   readonly editButton = this.tableBody.getByTestId('edit-todo-title-button');
 
   readonly emptyRow = this.container.locator(`.empty:has-text('${i18n.todoTable.empty}')`);

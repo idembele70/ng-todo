@@ -6,8 +6,13 @@
   margin-top: 0.5rem;
 }
 
-input {
+.input-wrapper {
   flex: 1;
+  position: relative;
+}
+
+input {
+  width: 100%;
   padding: 0.6rem .75rem;
   border-radius: 10px;
   border: 1px solid rgba(15, 23, 42, .06);
