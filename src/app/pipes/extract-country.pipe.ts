@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ExtractCountryPipe implements PipeTransform {
 
-  transform(value: string): unknown {
+  transform(value: string): string {
     return value.replace(/_.*/, '')
   }
 
