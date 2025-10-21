@@ -16,7 +16,7 @@ export class TodoTableComponent {
 
   deleteTodoBtn(title: string) {
     const row = this.todoRow(title);
-    return row.getByTitle('Supprimer');
+    return row.getByTestId('delete-todo');
   }
 
   completeCheckbox(title: string) {

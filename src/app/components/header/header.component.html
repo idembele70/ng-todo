@@ -7,6 +7,18 @@
     <h5 class="muted">{{ 'header.subTitle' | translate }}</h5>
   </div>
   <div class="controls">
+    <select
+      name="langSelect"
+      class="lang-select"
+      [ngModel]="currentLang$ | async"
+      #langSelectModel="ngModel"
+      [attr.aria-label]="'header.select.ariaLabel' | translate">
+      <option
+        *ngFor="let lang of (availableLang$ | async)"
+        [ngValue]="lang">
+        {{lang | extractCountry }}
+      </option>
+    </select>
     <button
       (click)="onDeleteAllTodos(true)"
       [disabled]="isProcessing || !hasCompletedTodos"

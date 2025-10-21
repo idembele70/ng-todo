@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "e2e-test:local": "npx playwright test --project=local"
+    "e2e-test:local:FR_fr": "E2E_LANGUAGE=fr npx playwright test --project=local",
+    "e2e-test:local:EN_us": "E2E_LANGUAGE=en npx playwright test --project=local"
   },
   "private": true,
   "dependencies": {

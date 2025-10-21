@@ -8,6 +8,8 @@ import dotenv from 'dotenv';
 import path from 'path';
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
+const params = `?lang=${process.env['E2E_LANGUAGE'] === 'fr' ? 'FR_fr': 'EN_us'}`;
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -40,7 +42,7 @@ export default defineConfig({
         ...devices['Desktop Chrome'],
         // ...devices['Desktop Firefox'],
         // ...devices['Desktop Safari'],
-        baseURL: process.env['BASE_URL'],
+        baseURL: process.env['BASE_URL'] + params,
       },
       
     },

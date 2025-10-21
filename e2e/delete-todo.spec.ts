@@ -19,7 +19,7 @@ test.describe('Todo Deletion', () => {
 
   test('It should delete a single todo successfully', async () => {
     const title = 'todo to delete title';
-
+    
     await todoPage.addTodo(title);
     await todoPage.todoTable.deleteTodoBtn(title).click();
 
