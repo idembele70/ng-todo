@@ -15,7 +15,7 @@ export class TodoPage {
   readonly toastrContainer = this.page.locator('#toast-container');
 
   async goto() {
-    await this.page.goto('/');
+    await this.page.goto('');
   }
 
   async addTodo(title: string) {

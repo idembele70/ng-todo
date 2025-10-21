@@ -28,6 +28,22 @@ h1 {
   gap: 0.5rem;
   align-items: center;
 }
+
+.lang-select {
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 8px;
+  padding: .4rem .6rem;
+  font-size: .9rem;
+  background: white;
+  color: #111827;
+  cursor: pointer;
+  transition: border-color .15s ease;
+
+  &:hover {
+    border-color: var(--accent);
+  }
+}
+
 h5.muted {
   margin-top: 6px;
 }

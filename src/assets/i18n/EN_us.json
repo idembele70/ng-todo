@@ -1,3 +1,131 @@
 {
-  
+  "header": {
+    "title": {
+      "content": "Task List",
+      "badge": "by @idembele70"
+    },
+    "subTitle": "Add, complete, edit, delete.",
+    "select": {
+      "ariaLabel": "Language selection"
+    },
+    "clear": {
+      "completed": {
+        "label": "Clear completed",
+        "title": {
+          "enabled": "Delete all completed tasks.",
+          "disabled": "No completed tasks to delete."
+        },
+        "messages": {
+          "success": "All completed tasks have been deleted!",
+          "error": "An error occurred while deleting completed tasks. Please try again."
+        }
+      },
+      "all": {
+        "label": "Clear all",
+        "title": {
+          "enabled": "Delete all tasks",
+          "disabled": "No tasks to delete"
+        },
+        "messages": {
+          "success": "All tasks have been successfully deleted!",
+          "error": "An error occurred while deleting all tasks. Please try again."
+        }
+      }
+    }
+  },
+  "addTodoForm": {
+    "placeholder": "New task... (e.g.: Call mom)",
+    "input": {
+      "whitespace": {
+        "messages": {
+          "error": "Title cannot contain only spaces."
+        }
+      },
+      "existing": {
+        "messages": {
+          "error": "This task title is already in use."
+        }
+      }
+    },
+    "button": {
+      "title": "Add",
+      "messages": {
+        "success": "Task created successfully!",
+        "error": "Error while creating the task. Please try again."
+      }
+    }
+  },
+  "todoTable": {
+    "header": {
+      "id": "#",
+      "task": "Task",
+      "createdAt": "Created",
+      "actions": "Actions"
+    },
+    "row": {
+      "checkboxLabel": {
+        "completed": {
+          "title": "Mark as not done",
+          "messages": {
+            "success": "Task marked as not completed successfully.",
+            "error": "An error occurred while marking the task as not completed."
+          }
+        },
+        "unCompleted": {
+          "title": "Mark as done",
+          "messages": {
+            "success": "Task marked as completed successfully.",
+            "error": "An error occurred while marking the task as completed."
+          }
+        }
+      },
+      "title": {
+        "editing": {
+          "idle": "Double-click to edit the title.",
+          "active": "Press Enter, Esc, or click elsewhere (outside disabled field) to save your changes."
+        },
+        "editInput": {
+          "ariaLabel": "Edit title",
+          "messages": {
+            "success": "Task updated successfully!",
+            "error": "An error occurred while updating the task title."
+          }
+        }
+      },
+      "btn": {
+        "edit": {
+          "title": "Edit"
+        },
+        "remove": {
+          "title": "Delete",
+          "messages": {
+            "success": "Task deleted successfully.",
+            "error": "Failed to delete the task. Please try again."
+          }
+        }
+      }
+    },
+    "empty": "No tasks — add the first one!"
+  },
+  "footer": {
+    "button": {
+      "previous": {
+        "label": "Previous",
+        "title": {
+          "enabled": "Go to the previous page.",
+          "disabled": "Cannot navigate to the previous page."
+        }
+      },
+      "next": {
+        "label": "Next",
+        "title": {
+          "enabled": "Go to the next page.",
+          "disabled": "Cannot navigate to the next page."
+        }
+      }
+    },
+    "messages": {
+      "error": "An error occurred while navigating. Please try again."
+    }
+  }
 }

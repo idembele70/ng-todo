@@ -5,6 +5,9 @@
       "badge": "par @idembele70"
     },
     "subTitle": "Ajoute, complète, édite, supprime.",
+    "select": {
+      "ariaLabel": "Sélection de langue"
+    },
     "clear": {
       "completed": {
         "label": "Supprimer terminées",
