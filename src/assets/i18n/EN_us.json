@@ -40,6 +40,11 @@
         "messages": {
           "error": "Title cannot contain only spaces."
         }
+      },
+      "existing": {
+        "messages": {
+          "error": "This task title is already in use."
+        }
       }
     },
     "button": {
