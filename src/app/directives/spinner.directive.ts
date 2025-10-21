@@ -30,8 +30,8 @@ export class SpinnerDirective implements OnChanges, AfterViewInit {
     const spinner = this.el.nativeElement as HTMLDivElement;
     const y = this.size ? 0 : -50;
 
-    this.renderer.setStyle(spinner, 'width', this.size ? `${this?.size}rem` : '1.5rem');
-    this.renderer.setStyle(spinner, 'height', this.size ? `${this?.size}rem` : '1.5rem');
+    this.renderer.setStyle(spinner, 'width', this.size ? `${this.size}rem` : '1.5rem');
+    this.renderer.setStyle(spinner, 'height', this.size ? `${this.size}rem` : '1.5rem');
     this.renderer.setStyle(spinner, 'position', this.size ? 'relative' : 'absolute');
     this.renderer.setStyle(spinner, 'transform', `translateY(${y}%)`);
   }
