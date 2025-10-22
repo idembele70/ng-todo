@@ -10,7 +10,7 @@
     "e2e-test:local:FR_fr": "E2E_LANGUAGE=fr npx playwright test --project=local",
     "e2e-test:local:EN_us": "E2E_LANGUAGE=en npx playwright test --project=local",
     "deploy": "gh-pages -d dist/browser",
-    "docker:build-run": "docker build --no-cache -t ng-todo . && docker run -p 8080:80 --name ng-todo ng-todo:latest"
+    "docker:build-run": "docker build --no-cache -t ng-todo . && docker run -d -p 8080:80 --name ng-todo ng-todo:latest"
   },
   "private": true,
   "dependencies": {
