@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: '',
+  apiUrl: 'https://vps-dc56a7e6.vps.ovh.net/api',
 };
