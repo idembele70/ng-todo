@@ -1,31 +1,31 @@
-# Étape 1 : Build de l'application Angular
+# Step 1: Build the Angular application
 FROM node:22-alpine AS build
 
 WORKDIR /app
 
-# Copier les fichiers package
+# Copy package files
 COPY package.json package-lock.json ./
 
-# Installer les dépendances
+# Install dependencies
 RUN npm ci
 
-# Copier tout le code source
+# Copy all source code
 COPY . .
 
-# Build de l'application en production
+# Build the application for production
 RUN npm run build
 
-# Étape 2 : Serveur Nginx pour l'application buildée
+# Step 2: Nginx server for the built application
 FROM nginx:alpine
 
-# Copier les fichiers buildés depuis l'étape précédente
+# Copy built files from previous step
 COPY --from=build /app/dist/browser /usr/share/nginx/html/ng-todo
 
-# Config Nginx custom
+# Custom Nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Exposer le port 80
+# Expose port 80
 EXPOSE 80
 
-# Démarrer Nginx
+# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
