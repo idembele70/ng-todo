@@ -79,6 +79,7 @@ export class AddFormComponent implements OnInit, OnDestroy, AfterViewInit {
     e.preventDefault();
     if (this.isProcessing || ['PENDING', 'INVALID'].includes(this.todoInput.status as string)) return;
 
+    this.todoService.setProcessing(true);
     const inputPrefix = 'addTodoForm.input';
     const trimmedName = this.todoName.trim();
     if (!trimmedName) {
