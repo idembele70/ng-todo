@@ -1,4 +1,4 @@
-<td style="width: 6%;">{{ todo.id }}</td>
+<td class="hide-mobile" style="width: 6%;">{{ todo.id }}</td>
 <td style="width: 56%;">
   <div
     [attr.data-testid]="'title-' + todo.title"
@@ -54,7 +54,7 @@
     </ng-template>
   </div>
 </td>
-<td style="width: 22%;" class="muted">{{ todo.createdAt | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+<td style="width: 22%;" class="muted hide-mobile">{{ todo.createdAt | date:'dd/MM/yyyy HH:mm:ss' }}</td>
 <td style="width: 16%;">
   <div class="actions">
     <button

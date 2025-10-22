@@ -10,8 +10,8 @@
   --sm: 720px;
 }
 
-html, body {
-  height: 100%;
+html {
+  min-height: 100vh;
 }
 
 * {
@@ -27,6 +27,16 @@ body {
   justify-content: center;
   padding: 3rem 1rem;
   color: #111827;
+
+  @media screen and (max-width: 450px) {
+    padding: 3rem 0.2rem;
+  }
+}
+
+.hide-mobile {
+  @media screen and (max-width: 450px) {
+    display: none;
+  }
 }
 
 .container {
@@ -39,6 +49,9 @@ body {
   border: 1px solid rgb(0, 0, 0, .03);
   @media (max-width: 880px) {
     width: 100%;
+  }
+    @media screen and (max-width: 450px) {
+    padding: .5rem;
   }
 }
 
