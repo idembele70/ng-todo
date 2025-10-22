@@ -1,0 +1,131 @@
+{
+  "header": {
+    "title": {
+      "content": "Liste des tâches",
+      "badge": "par @idembele70"
+    },
+    "subTitle": "Ajoute, complète, édite, supprime.",
+    "select": {
+      "ariaLabel": "Sélection de langue"
+    },
+    "clear": {
+      "completed": {
+        "label": "Supprimer terminées",
+        "title": {
+          "enabled": "Supprimer toutes les tâches complétées.",
+          "disabled": "Aucune tâche complétée à supprimer."
+        },
+        "messages": {
+          "success": "Toutes les tâches complétées ont été supprimées !",
+          "error": "Une erreur est survenue lors de la suppression des tâches complétées. Réessayez."
+        }
+      },
+      "all": {
+        "label": "Vider",
+        "title": {
+          "enabled": "Supprimer toutes les tâches",
+          "disabled": "Aucune tâche à supprimer"
+        },
+        "messages": {
+          "success": "Toutes les tâches ont été supprimées avec succès !",
+          "error": "Une erreur est survenue lors de la suppression de toutes les tâches. Réessayez."
+        }
+      }
+    }
+  },
+  "addTodoForm": {
+    "placeholder": "Nouvelle tâche...(ex: Appeler maman)",
+    "input": {
+      "whitespace": {
+        "messages": {
+          "error": "Le titre ne peut pas contenir uniquement des espaces."
+        }
+      },
+      "existing": {
+        "messages": {
+          "error": "Ce titre de tâche est déjà utilisé."
+        }
+      }
+    },
+    "button": {
+      "title": "Ajouter",
+      "messages": {
+        "success": "Tâche créée avec succès !",
+        "error": "Erreur lors de la création. Réessayez."
+      }
+    }
+  },
+  "todoTable": {
+    "header": {
+      "id": "#",
+      "task": "Tâche",
+      "createdAt": "créée",
+      "actions": "Actions"
+    },
+    "row": {
+      "checkboxLabel": {
+        "completed": {
+          "title": "Marquer comme non fait",
+          "messages": {
+            "success": "Tâche marquée comme non terminée avec succès.",
+            "error": "Une erreur est survenue lors du marquage comme non terminée."
+          }
+        },
+        "unCompleted": {
+          "title": "Marquer comme fait",
+          "messages": {
+            "success": "Tâche marquée comme terminée avec succès.",
+            "error": "Une erreur est survenue lors du marquage comme terminée."
+          }
+        }
+      },
+      "title": {
+        "editing": {
+          "idle": "Double-cliquez pour modifier le titre.",
+          "active": "Appuyer sur Entrée, Échap ou cliquez ailleurs (hors champs désactivé) pour enregistrer votre modification."
+        },
+        "editInput": {
+          "ariaLabel": "Modifier le titre",
+          "messages": {
+            "success": "La tâche a été modifiée avec succès !",
+            "error": "Une erreur est survenue lors de la modification du titre de la tâche."
+          }
+        }
+      },
+      "btn": {
+        "edit": {
+          "title": "Modifier"
+        },
+        "remove": {
+          "title": "Supprimer",
+          "messages": {
+            "success": "La tâche a été supprimée avec succès.",
+            "error": "La suppression de la tâche a échoué. Veuillez réessayer."
+          }
+        }
+      }
+    },
+    "empty": "Aucune tâche — ajoute la première !"
+  },
+  "footer": {
+    "button": {
+      "previous": {
+        "label": "Précédent",
+        "title": {
+          "enabled": "Aller à la page précédente.",
+          "disabled": "Navigation vers la page précédente impossible."
+        }
+      },
+      "next": {
+        "label": "Suivant",
+        "title": {
+          "enabled": "Aller à la page suivante.",
+          "disabled": "Navigation vers la page suivante impossible."
+        }
+      }
+    },
+    "messages": {
+      "error": "Une erreur est survenue lors de la navigation. Veuillez réessayer."
+    }
+  }
+}
