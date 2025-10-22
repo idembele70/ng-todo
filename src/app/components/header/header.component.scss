@@ -1,9 +1,14 @@
 header {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
+
+  & > div{
+    margin: auto;
+  }
 }
 
 h1 {
@@ -12,6 +17,7 @@ h1 {
   display: flex;
   gap: 0.5em;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .badge {
@@ -27,6 +33,8 @@ h1 {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .lang-select {

@@ -104,6 +104,7 @@ input[type="checkbox"] {
   white-space: nowrap;
   width: fit-content;
   max-width: 100%;
+  min-width: 80px;
 
   &::after {
     content: ' ';

@@ -4,11 +4,17 @@
   align-items: center;
   width: 100%;
   margin-top: 0.5rem;
+  @media screen and (max-width: 450px) {
+    flex-direction: column;
+  }
 }
 
 .input-wrapper {
   flex: 1;
   position: relative;
+  @media screen and (max-width: 450px) {
+    width: 100%;
+  }
 }
 
 input {

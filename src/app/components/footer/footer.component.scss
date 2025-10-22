@@ -6,6 +6,9 @@ footer {
   margin-top: 1rem;
   user-select: none;
   font-size: .9rem;
+  @media screen and (max-width: 300px) {
+    flex-direction: column;
+  }
 }
 
 footer .btn {
