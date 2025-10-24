@@ -20,13 +20,20 @@ export class TodoPage {
 
   async addTodo(title: string) {
     await this.addTodoForm.todoInput.fill(title);
+    await expect(this.addTodoForm.spinner).toBeVisible();
+    await expect(this.addTodoForm.spinner).toBeHidden();
     await this.addTodoForm.addBtn.click();
 
     const notifySuccess = this.toastrContainer.filter({ hasText: i18n.addTodoForm.button.messages.success });
 
     await notifySuccess.waitFor({ state: 'visible' });
     await notifySuccess.waitFor({ state: 'hidden' });
-    
+
+  }
+
+  async assertDuplicateTodoErrorAfterTyping(title: string) {
+    await this.addTodoForm.todoInput.fill(title);
+    await this.assertNotification(i18n.addTodoForm.input.existing.messages.error);
   }
 
   async completeTodo(title: string) {
@@ -99,7 +106,7 @@ export class TodoPage {
       expect(this.footer.nextButton).toBeDisabled(),
     ]);
   }
-  
+
   async assertTodoRowControlsEnabled(title: string) {
     const checkbox = this.todoTable.completeCheckbox(title);
     const deleteBtn = this.todoTable.deleteTodoBtn(title);

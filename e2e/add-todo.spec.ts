@@ -49,8 +49,7 @@ test.describe('It should add a new todo', () => {
     const todoCount = 2;
 
     await todoPage.addTodoForm.todoInput.fill(title);
-    await todoPage.addTodoForm.addBtn.click();
-    await todoPage.assertNotification(i18n.addTodoForm.input.whitespace.messages.error);
+    await expect(todoPage.addTodoForm.addBtn).toBeDisabled();
     await expect(todoPage.todoTable.todoRows).toHaveCount(todoCount);
   });
 
@@ -94,17 +93,24 @@ test.describe('It should add a new todo', () => {
     expect(todoTitleLength).toBe(maxLength);
   });
 
-  test('It should prevent creating a duplicate todo', async () => {
-    await TodoPage.resetDB();
+  test.describe('Duplicate todo', () => {
     const title = 'duplicate todo';
-    await todoPage.addTodo(title);
 
-    await todoPage.addTodoForm.todoInput.fill(title);
-    await expect(todoPage.addTodoForm.spinner).toBeVisible();
-    await expect(todoPage.addTodoForm.spinner).toBeHidden();
-    await todoPage.addTodoForm.todoInput.press('Enter');
+    test.beforeEach(async () => {
+      await TodoPage.resetDB();
+      await todoPage.addTodo(title);
+    });
 
-    await todoPage.assertNotification(i18n.addTodoForm.input.existing.messages.error);
-    await todoPage.assertTodoRowControlsEnabled(title);
+    test('It should prevent creating a duplicate todo', async () => {
+      await todoPage.assertDuplicateTodoErrorAfterTyping(title);
+      await todoPage.assertTodoRowControlsEnabled(title);
+    });
+    
+    test('It should reset duplicate validation state after todo removal', async () => {
+      await todoPage.assertDuplicateTodoErrorAfterTyping(title);
+      await todoPage.deleteTodo(title);
+      await todoPage.addTodoForm.addBtn.click();
+      await todoPage.assertNotification(i18n.addTodoForm.button.messages.success);
+    });
   });
 });

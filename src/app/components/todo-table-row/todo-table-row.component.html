@@ -40,7 +40,7 @@
         #titleInputRef
         #titleInputModel="ngModel"
         type="text"
-      pattern="^[A-Za-z][\w\s.,!?\-]{0,39}$"
+        pattern="^(?!.*\s[.,!?-])[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,!?-]{1,40}$"
         [(ngModel)]="todo.title"
         autocomplete="off"
         (keyup.enter)="save($event)"
