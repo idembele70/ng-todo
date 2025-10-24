@@ -102,7 +102,7 @@ test.describe('It should add a new todo', () => {
     });
 
     test('It should prevent creating a duplicate todo', async () => {
-      await todoPage.assertDuplicateTodoErrorAfterTyping(title)
+      await todoPage.assertDuplicateTodoErrorAfterTyping(title);
       await todoPage.assertTodoRowControlsEnabled(title);
     });
     

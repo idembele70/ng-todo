@@ -37,7 +37,7 @@ export class AddFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.listenToRefreshForInputValidation();
-    this.observerTodoProcessingAndPagination();
+    this.observeTodoProcessingAndPagination();
   }
 
   ngOnDestroy(): void {
@@ -106,7 +106,7 @@ export class AddFormComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe();
   }
 
-  private observerTodoProcessingAndPagination() {
+  private observeTodoProcessingAndPagination() {
     combineLatest([
       this.todoService.isProcessing$,
       this.todoService.paginationInfo$,
