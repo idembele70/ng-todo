@@ -8,7 +8,7 @@
       name="todoInput"
       #todoInput="ngModel"
       [(ngModel)]="todoName"
-      pattern="^[A-Za-z][\w\s.,!?\-]{0,39}$"
+      pattern="^(?!.*\s[.,!?-])[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,!?-]{1,40}$"
       [placeholder]="'addTodoForm.placeholder' | translate" autocomplete="off" required minlength="1" maxlength="40">
     <div
       class="spinner"

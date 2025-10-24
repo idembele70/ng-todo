@@ -50,6 +50,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.todoService.refreshHasCompletedTodos();
+
     combineLatest([
       this.todoService.isProcessing$.pipe(distinctUntilChanged()),
       this.todoService.todos$.pipe(distinctUntilChanged()),

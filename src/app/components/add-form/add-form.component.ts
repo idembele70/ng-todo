@@ -36,22 +36,12 @@ export class AddFormComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    combineLatest([
-      this.todoService.isProcessing$,
-      this.todoService.paginationInfo$,
-    ])
-      .pipe(takeUntil(this._destroy$))
-      .subscribe(([isProcessing, pageInfo]) => {
-        this.isProcessing = isProcessing;
-        this.pageInfo = pageInfo;
-      });
+    this.listenToRefreshForInputValidation();
+    this.observerTodoProcessingAndPagination();
   }
 
   ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-    this._statusChangeSubscription$.next();
-    this._statusChangeSubscription$.complete();
+    this.teardown();
   }
 
   ngAfterViewInit(): void {
@@ -102,5 +92,36 @@ export class AddFormComponent implements OnInit, OnDestroy, AfterViewInit {
         }),
       )
       .subscribe();
+  }
+
+  private listenToRefreshForInputValidation() {
+    this.todoService.refreshChanges$
+      .pipe(
+        tap(() => {
+          if (!this.todoName.trim()) return;
+          this.todoInput.control.updateValueAndValidity({ emitEvent: false });
+        }),
+        takeUntil(this._destroy$),
+      )
+      .subscribe();
+  }
+
+  private observerTodoProcessingAndPagination() {
+    combineLatest([
+      this.todoService.isProcessing$,
+      this.todoService.paginationInfo$,
+    ])
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(([isProcessing, pageInfo]) => {
+        this.isProcessing = isProcessing;
+        this.pageInfo = pageInfo;
+      });
+  }
+
+  private teardown() {
+    this._destroy$.next();
+    this._destroy$.complete();
+    this._statusChangeSubscription$.next();
+    this._statusChangeSubscription$.complete();
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject, switchMap, tap } from 'rxjs';
 import { CompleteTodoEvent } from '../models/complete-todo-event.model';
 import { EditTodoTitleEvent } from '../models/edit-todo-title-event.model';
 import { PaginatedTodos, PaginationInfo } from '../models/paginated-todos.model';
@@ -19,11 +19,13 @@ export class TodoService {
     totalItems: 10,
     totalPages: 1,
   });
+  private readonly _refreshChanges$ = new Subject<void>();
 
   readonly todos$ = this._todos$.asObservable();
   readonly isProcessing$ = this._isProcessing$.asObservable();
   readonly hasCompletedTodos$ = this._hasCompletedTodos$.asObservable();
   readonly paginationInfo$ = this._paginationInfo$.asObservable();
+  readonly refreshChanges$ = this._refreshChanges$.asObservable();
 
   constructor(private readonly httpClient: HttpClient) { }
 
@@ -35,7 +37,10 @@ export class TodoService {
     this.setProcessing(true);
     return this.httpClient.delete<void>(`${this._baseUrl}/${id}`)
       .pipe(
-        tap(() => this.refreshHasCompletedTodos())
+        tap(() => {
+          this.refreshHasCompletedTodos();
+          this._refreshChanges$.next();
+        })
       );
   }
 
@@ -46,7 +51,10 @@ export class TodoService {
         complete,
       },
     }).pipe(
-      tap(() => this._hasCompletedTodos$.next(false)),
+      tap(() => {
+        this._hasCompletedTodos$.next(false);
+        this._refreshChanges$.next();
+      }),
     );
   }
 
@@ -66,6 +74,8 @@ export class TodoService {
     return this.httpClient.put<Todo>(
       `${this._baseUrl}/${id}`,
       { title },
+    ).pipe(
+      tap(() => this._refreshChanges$.next())
     );
   }
 
@@ -108,6 +118,7 @@ export class TodoService {
 
   refreshHasCompletedTodos(): void {
     this.setProcessing(true);
+
     const params = new HttpParams()
       .set('complete', 'true')
       .set('limit', 1);
