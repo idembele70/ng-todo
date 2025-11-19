@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { catchError, combineLatest, finalize, Subject, takeUntil } from 'rxjs';
 import { NotificationService } from '../../services/notification.service';
-import { TodoService } from './../../services/todo.service';
+import { TodoService } from '../../features/todos/services/todo.service';
 
 @Component({
   selector: 'app-footer',

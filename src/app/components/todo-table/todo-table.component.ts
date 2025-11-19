@@ -1,14 +1,13 @@
 import { AsyncPipe, NgFor, NgIf } from "@angular/common";
 import { Component, inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { BehaviorSubject, catchError, combineLatest, delay, EMPTY, finalize, fromEvent, race, Subject, switchMap, take, takeUntil, timer } from "rxjs";
+import { BehaviorSubject, catchError, combineLatest, EMPTY, finalize, fromEvent, race, Subject, switchMap, take, takeUntil, timer } from "rxjs";
 import { SpinnerDirective } from "../../directives/spinner.directive";
-import { CompleteTodoEvent } from "../../models/complete-todo-event.model";
+import { TodoService } from '../../features/todos/services/todo.service';
 import { EditTodoTitleEvent } from "../../models/edit-todo-title-event.model";
 import { PaginationInfo } from "../../models/paginated-todos.model";
 import { Todo } from "../../models/todo.model";
 import { ToggleEditStartEvent } from '../../models/toggle-edit-start-event.model';
-import { TodoService } from '../../services/todo.service';
 import { todoTitleExistsValidator } from '../../validators/todo-title-exists.validator';
 import { DeleteTodoEvent, TodoTableRowComponent } from "../todo-table-row/todo-table-row.component";
 import { NotificationService } from './../../services/notification.service';
@@ -64,7 +63,7 @@ export class TodoTableComponent implements OnInit, OnDestroy {
 
   onDeleteTodo({ id, el }: DeleteTodoEvent) {
     const prefix = 'todoTable.row.btn.remove';
-    this.todoService.deleteOneTodo$(id)
+    this.todoService.deleteOneTodo(id)
       .pipe(
         switchMap(() => this.notificationService.notifySuccess(prefix)),
         switchMap(() => this.animateRemoval$(el)),
@@ -84,11 +83,23 @@ export class TodoTableComponent implements OnInit, OnDestroy {
     this._statusChangeSubscription$.complete();
   }
 
-  onToggleComplete(ev: CompleteTodoEvent) {
+  onCompleteTodo(id: Todo['id']) {
     const prefix = 'todoTable.row.checkboxLabel';
-    const key = ev.complete ? 'unCompleted' : 'completed';
+    const key = 'completed';
 
-    this.todoService.toggleTodoCompletion$(ev).pipe(
+    this.todoService.completeTodo(id).pipe(
+      switchMap(() => this.notificationService.notifySuccess(`${prefix}.${key}`)),
+      switchMap(() => this.todoService.refreshTodos(this.pageInfo.currentPage)),
+      catchError(() => this.notificationService.notifyError(prefix, key)),
+      finalize(() => this.todoService.setProcessing(false)),
+    ).subscribe();
+  }
+
+  onUncompleteTodo(id: Todo['id']) {
+    const prefix = 'todoTable.row.checkboxLabel';
+    const key = 'unCompleted' ;
+
+    this.todoService.uncompleteTodo(id).pipe(
       switchMap(() => this.notificationService.notifySuccess(`${prefix}.${key}`)),
       switchMap(() => this.todoService.refreshTodos(this.pageInfo.currentPage)),
       catchError(() => this.notificationService.notifyError(prefix, key)),
@@ -114,14 +125,14 @@ export class TodoTableComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  onEditTitle(content: EditTodoTitleEvent) {
-    if (content.invalidChange) {
-      this.todoService.setProcessing(false);
-      return;
-    }
+  onEditTitle(todo: Todo) {
+    // if (content.invalidChange) {
+    //   this.todoService.setProcessing(false);
+    //   return;
+    // }
 
     const prefix = 'todoTable.row.title.editInput';
-    this.todoService.editTodoTitle$(content).pipe(
+    this.todoService.editTodoTitle(todo).pipe(
       switchMap(() => this.notificationService.notifySuccess(`${prefix}`)),
       switchMap(() => this.todoService.refreshTodos(this.pageInfo.currentPage)),
       catchError(() => this.notificationService.notifyError(prefix)),

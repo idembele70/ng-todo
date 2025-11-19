@@ -4,8 +4,6 @@ import { FormControl, FormsModule, NgModel } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { interval, Subject, takeUntil, tap } from 'rxjs';
 import { SpinnerDirective } from '../../directives/spinner.directive';
-import { CompleteTodoEvent } from '../../models/complete-todo-event.model';
-import { EditTodoTitleEvent } from '../../models/edit-todo-title-event.model';
 import { Todo } from '../../models/todo.model';
 import { ToggleEditStartEvent } from '../../models/toggle-edit-start-event.model';
 
@@ -26,8 +24,9 @@ export class TodoTableRowComponent implements AfterViewInit, OnDestroy, AfterVie
   @Input({ required: true }) isProcessing!: boolean;
   @Input({ required: true }) searching = false;
   @Output() delete = new EventEmitter<DeleteTodoEvent>();
-  @Output() toggleComplete = new EventEmitter<CompleteTodoEvent>();
-  @Output() editTodoTitle = new EventEmitter<EditTodoTitleEvent>();
+  @Output() completeTodo = new EventEmitter<Todo['id']>();
+  @Output() uncompleteTodo = new EventEmitter<Todo['id']>();
+  @Output() editTodoTitle = new EventEmitter<Todo>();
   @Output() toggleEditStart = new EventEmitter<ToggleEditStartEvent>();
 
   @ViewChild('titleInputRef') readonly inputRef?: ElementRef<HTMLInputElement>;
@@ -80,10 +79,10 @@ export class TodoTableRowComponent implements AfterViewInit, OnDestroy, AfterVie
     ev.preventDefault();
     if (this.isProcessing || this.editing) return;
 
-    this.toggleComplete.emit({
-      id: this.todo.id,
-      complete: this.todo.complete ? 0 : 1,
-    });
+    if(this.todo.complete)
+      this.uncompleteTodo.emit(this.todo.id)
+    else
+      this.completeTodo.emit(this.todo.id)
   }
 
   onStartEdit() {
@@ -136,15 +135,16 @@ export class TodoTableRowComponent implements AfterViewInit, OnDestroy, AfterVie
       this.previousTitle === trimmedTitle ||
       this.titleInputControl?.status === 'INVALID';
 
-    if (invalidChange)
-      this.todo.title = this.previousTitle;
-
     this.titleInputControl?.clearAsyncValidators();
 
+    if (invalidChange) {
+      this.todo.title = this.previousTitle;
+      return;
+    }
+
     this.editTodoTitle.emit({
-      id: this.todo.id,
+      ...this.todo,
       title: trimmedTitle,
-      invalidChange: invalidChange,
     });
   }
 }

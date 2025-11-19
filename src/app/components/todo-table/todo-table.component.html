@@ -11,7 +11,9 @@
     <tbody>
       <tr class="todo-row" *ngFor="let todo of todos; trackBy: trackById" app-todo-table-row [todo]="todo"
         (delete)="onDeleteTodo($event)" [isProcessing]="(isProcessing$ | async) ?? false"
-        (toggleComplete)="onToggleComplete($event)" (editTodoTitle)="onEditTitle($event)"
+        (completeTodo)="onCompleteTodo($event)"
+        (uncompleteTodo)="onUncompleteTodo($event)"
+        (editTodoTitle)="onEditTitle($event)"
         (toggleEditStart)="onToggleEditStart($event)" [searching]="searchingId === todo.id">
       </tr>
     </tbody>

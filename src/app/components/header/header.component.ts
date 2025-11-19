@@ -7,7 +7,7 @@ import { PaginationInfo } from '../../models/paginated-todos.model';
 import { ExtractCountryPipe } from "../../pipes/extract-country.pipe";
 import { LangService } from '../../services/lang.service';
 import { NotificationService } from '../../services/notification.service';
-import { TodoService } from '../../services/todo.service';
+import { TodoService } from '../../features/todos/services/todo.service';
 
 @Component({
   selector: 'app-header',
@@ -82,7 +82,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     const prefix = 'header.clear';
     const key = completed ? 'completed' : 'all';
 
-    this.todoService.deleteAllTodos$(completed).pipe(
+    this.todoService.deleteAllTodos().pipe(
       switchMap(() => this.notificationService.notifySuccess(`${prefix}.${key}`)),
       switchMap(() => this.todoService.refreshTodos(this.pageInfo.currentPage)),
       catchError(() => this.notificationService.notifyError(prefix, key)),

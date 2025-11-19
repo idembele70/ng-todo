@@ -4,7 +4,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { catchError, combineLatest, EMPTY, finalize, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { SpinnerDirective } from '../../directives/spinner.directive';
 import { PaginationInfo } from '../../models/paginated-todos.model';
-import { TodoService } from '../../services/todo.service';
+import { TodoService } from '../../features/todos/services/todo.service';
 import { todoTitleExistsValidator } from '../../validators/todo-title-exists.validator';
 import { NotificationService } from './../../services/notification.service';
 
@@ -80,7 +80,7 @@ export class AddFormComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     const buttonPrefix = 'addTodoForm.button';
-    this.todoService.addTodo(trimmedName)
+    this.todoService.addTodo({title: trimmedName})
       .pipe(
         switchMap(() => this.notificationService.notifySuccess(buttonPrefix)),
         switchMap(() => this.todoService.refreshTodos(this.pageInfo.currentPage)),
