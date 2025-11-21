@@ -1,17 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
-import { EditTodoTitleEvent } from '../../../models/edit-todo-title-event.model';
-import { PaginatedTodos, PaginationInfo } from '../../../models/paginated-todos.model';
 import { TODO_API_PATHS_TOKEN, TodoApiPaths } from '../config/todo-api-paths.config';
-import { Todo } from '../models/todo.model';
+import { PaginatedTodos, PaginationInfo, Todo, TodoCompletion } from '../models/todo.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class TodoService {
   private readonly _todos$ = new BehaviorSubject<Todo[]>([]);
-  private readonly _baseUrl = '/todos';
   private readonly _isProcessing$ = new BehaviorSubject(false);
   private readonly _hasCompletedTodos$ = new BehaviorSubject(false);
   private readonly _paginationInfo$ = new BehaviorSubject<PaginationInfo>({
@@ -60,7 +55,7 @@ export class TodoService {
   deleteAllCompletedTodos(): Observable<void> {
     return this.httpClient.delete<void>(this.apiPaths.DELETE_ALL_COMPLETED, {
       params: {
-        complete: true,
+        complete: TodoCompletion.COMPLETED,
       },
     }).pipe(
       tap(() => {
@@ -73,7 +68,7 @@ export class TodoService {
   completeTodo(id: Todo['id']): Observable<Todo> {
     return this.httpClient.put<{ todo: Todo }>(
       this.apiPaths.COMPLETE_ONE + id,
-      { complete: true },
+      { complete: TodoCompletion.COMPLETED },
     ).pipe(
       tap(() => this._hasCompletedTodos$.next(true)),
       map(responseData => responseData.todo),
@@ -83,7 +78,7 @@ export class TodoService {
   uncompleteTodo(id: Todo['id']): Observable<Todo> {
     return this.httpClient.put<{ todo: Todo }>(
       this.apiPaths.COMPLETE_ONE + id,
-      { complete: false },
+      { complete: TodoCompletion.UNCOMPLETED },
     ).pipe(
       tap(() => this.refreshHasCompletedTodos()),
       map(responseData => responseData.todo)

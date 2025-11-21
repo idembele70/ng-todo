@@ -1,13 +1,12 @@
 import { provideHttpClient } from "@angular/common/http";
 import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
-import { firstValueFrom, lastValueFrom, Subscription } from "rxjs";
+import { firstValueFrom, Subscription } from "rxjs";
 import { TODO_API_PATHS, TODO_API_PATHS_TOKEN, TodoApiPaths } from "../config/todo-api-paths.config";
-import { PaginatedTodos, Todo } from "../models/todo.model";
+import { PaginatedTodos, PaginationInfo, Todo } from "../models/todo.model";
 import { flushRefreshHasCompleted } from '../testing/todo.utility';
 import { TodoCompletion } from './../models/todo.model';
 import { TodoService } from "./todo.service";
-import { PaginationInfo } from "../../../models/paginated-todos.model";
 
 describe('TodoService', () => {
   let httpMock: HttpTestingController;
@@ -32,6 +31,7 @@ describe('TodoService', () => {
           provide: TODO_API_PATHS_TOKEN,
           useValue: TODO_API_PATHS,
         },
+        TodoService,
       ],
     });
     httpMock = TestBed.inject(HttpTestingController);
@@ -171,22 +171,25 @@ describe('TodoService', () => {
     });
 
     it('should delete completed todos and set hasCompleted to false + emit once refreshChanges', async () => {
-      const promise = firstValueFrom(service.deleteAllTodos());
-      const req = httpMock.expectOne(apiPaths.DELETE_ALL_COMPLETED);
-      expect(req.request.method).toBe('DELETE');
+      const promise = firstValueFrom(service.deleteAllCompletedTodos());
+      const req = httpMock.expectOne(req =>
+        req.url === apiPaths.DELETE_ALL_COMPLETED &&
+        req.method === 'DELETE' &&
+        req.params.get('complete') === String(TodoCompletion.COMPLETED)
+      );
       expect(req.request.body).toBeNull();
       req.flush(null);
       await promise;
       expect(refreshChangesCount).toBe(1);
       const hasCompletedTodos = await firstValueFrom(service.hasCompletedTodos$);
       expect(hasCompletedTodos).toBeFalse();
-    })
+    });
 
     it('should handle clean all completed todos error', async () => {
       const promise = firstValueFrom(service.deleteAllCompletedTodos());
       const req = httpMock.expectOne(req =>
         req.url === apiPaths.DELETE_ALL_COMPLETED &&
-        req.params.get('complete') === 'true' &&
+        req.params.get('complete') === String(TodoCompletion.COMPLETED) &&
         req.method === 'DELETE'
       );
       req.flush('Cannot clean completed todos', mockErrorResponse);
@@ -209,11 +212,11 @@ describe('TodoService', () => {
       service.setHasCompletedTodos(false);
       const promise = firstValueFrom(service.completeTodo(id));
       const req = httpMock.expectOne(apiPaths.COMPLETE_ONE + id);
-      expect(req.request.method).toBe('PUT')
-      expect(req.request.body).toEqual({ complete: true })
-      req.flush({ todo: { ...mockTodo, complete: true } });
+      expect(req.request.method).toBe('PUT');
+      expect(req.request.body).toEqual({ complete: TodoCompletion.COMPLETED });
+      req.flush({ todo: { ...mockTodo, complete: TodoCompletion.COMPLETED } });
       const todo = await promise;
-      expect(todo.complete).toBeTrue();
+      expect(todo.complete).toBe(TodoCompletion.COMPLETED);
       const hasCompletedTodos = await firstValueFrom(service.hasCompletedTodos$);
       expect(hasCompletedTodos).toBeTrue();
     });
@@ -225,8 +228,8 @@ describe('TodoService', () => {
       const promise = firstValueFrom(service.uncompleteTodo(id));
       const req = httpMock.expectOne(apiPaths.UNCOMPLETE_ONE + id);
       expect(req.request.method).toBe('PUT');
-      expect(req.request.body).toEqual({ complete: false });
-      req.flush({ todo: { ...mockTodo, complete: false } });
+      expect(req.request.body).toEqual({ complete: TodoCompletion.UNCOMPLETED });
+      req.flush({ todo: { ...mockTodo, complete: TodoCompletion.UNCOMPLETED } });
 
       flushRefreshHasCompleted(
         httpMock,
@@ -235,7 +238,7 @@ describe('TodoService', () => {
       );
 
       const todo = await promise;
-      expect(todo.complete).toBeFalse();
+      expect(todo.complete).toBe(0);
     });
   });
 

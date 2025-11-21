@@ -1,0 +1,13 @@
+<form #todoForm="ngForm" class="add-todo-form" (ngSubmit)="onAddTodo($event)">
+  <app-title-input
+    name="todoInput"
+    [formControl]="todoTitle"
+    [placeholder]="'addTodoForm.placeholder' | translate"
+    [isSearching]="!!todoTitle.pending"
+    />
+  <button class="btn" [disabled]="this.todoTitle.invalid ||
+      this.todoTitle.pending ||
+      this.isProcessing" type="submit">
+    {{ 'addTodoForm.button.title' | translate }}
+  </button>
+</form>

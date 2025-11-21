@@ -1,0 +1,38 @@
+<header>
+  <div>
+    <h1>
+      <span>{{ 'header.title.content' | translate}}</span>
+      <span class="badge">{{ 'header.title.badge' | translate }}</span>
+    </h1>
+    <h5 class="muted">{{ 'header.subTitle' | translate }}</h5>
+  </div>
+  <div class="controls">
+    <select
+      name="langSelect"
+      class="lang-select"
+      [formControl]="langSelect"
+      [attr.aria-label]="'header.select.ariaLabel' | translate">
+      <option
+        *ngFor="let lang of (availableLang$ | async)"
+        [value]="lang">
+        {{lang | extractCountry }}
+      </option>
+    </select>
+    <button
+      (click)="onDeleteAllCompletedTodos()"
+      [disabled]="isProcessing || !hasCompletedTodos"
+      [title]="'header.clear.completed.title.' + (hasCompletedTodos ? 'enabled' : 'disabled') | translate"
+      class="btn"
+      type="button">
+      {{ 'header.clear.completed.label' | translate }}
+    </button>
+    <button
+    [disabled]="isProcessing || !hasTodos"
+    [title]="'header.clear.all.title.' + (hasTodos ? 'enabled' : 'disabled' ) | translate"
+    (click)="onDeleteAllTodos()"
+    class="btn clear-all"
+    type="button">
+      {{ 'header.clear.all.label' | translate }}
+    </button>
+  </div>
+</header>
