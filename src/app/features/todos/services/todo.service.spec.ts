@@ -41,7 +41,7 @@ describe('TodoService', () => {
 
   afterEach(() => {
     httpMock.verify();
-  })
+  });
 
   describe('addTodo', () => {
     it('should add a todo', async () => {
@@ -95,7 +95,7 @@ describe('TodoService', () => {
         httpMock,
         apiPaths.GET_HAS_COMPLETED,
         { totalItems: 0 }
-      )
+      );
       await promise;
       expect(refreshTriggeredCount).toBe(1);
     });
@@ -126,7 +126,8 @@ describe('TodoService', () => {
 
     afterEach(() => {
       sub.unsubscribe();
-    })
+    });
+
     it('should delete all todos and set hasCompleted to false + emit once refreshChanges', async () => {
       const promise = firstValueFrom(service.deleteAllTodos());
       const req = httpMock.expectOne(apiPaths.DELETE_ALL);
@@ -137,7 +138,7 @@ describe('TodoService', () => {
       expect(refreshChangesCount).toBe(1);
       const hasCompletedTodos = await firstValueFrom(service.hasCompletedTodos$);
       expect(hasCompletedTodos).toBeFalse();
-    })
+    });
 
     it('should handle remove all error', async () => {
       const promise = firstValueFrom(service.deleteAllTodos());
@@ -261,7 +262,7 @@ describe('TodoService', () => {
       expect(todo.title).toBe(update.title);
       expect(refreshChangeCount).toBe(1);
       sub.unsubscribe();
-    })
+    });
   });
 
   describe('refreshTodos', () => {
@@ -276,8 +277,8 @@ describe('TodoService', () => {
         todos: [
           mockTodo,
           { ...mockTodo, id: 2 },
-        ]
-      }
+        ],
+      };
       const currentPage = 1;
       const promise = firstValueFrom(service.refreshTodos(currentPage));
       const req = httpMock.expectOne(req =>
@@ -327,12 +328,12 @@ describe('TodoService', () => {
         )
         .flush(mockPreviousPageResponse);
 
-      const paginationInfo = await firstValueFrom(service.paginationInfo$)
+      const paginationInfo = await firstValueFrom(service.paginationInfo$);
       expect(mockPreviousPageResponse).toEqual(jasmine.objectContaining(paginationInfo));
 
       const response = await promise;
       expect(response).toEqual(mockPreviousPageResponse);
-    })
+    });
   });
 
   describe('refreshCompletedTodos', () => {
@@ -349,7 +350,7 @@ describe('TodoService', () => {
       .flush({ totalItems: 2 });
 
       const hasCompletedTodos = await firstValueFrom(service.hasCompletedTodos$);
-      expect(hasCompletedTodos).toBeTrue()
+      expect(hasCompletedTodos).toBeTrue();
     });
   });
 
@@ -362,11 +363,11 @@ describe('TodoService', () => {
           req.method === 'GET' &&
           req.url === apiPaths.GET_TODO_EXISTS_BY_TITLE &&
           req.params.get('title') === 'Test todo')
-        .flush(mockResponse)
+        .flush(mockResponse);
 
       const response = await promise;
       expect(response).toBeTrue();
-    })
+    });
   })
 });
 

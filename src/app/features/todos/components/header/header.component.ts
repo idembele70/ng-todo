@@ -1,15 +1,15 @@
 import { AsyncPipe, NgForOf } from "@angular/common";
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormsModule, NgModel, ReactiveFormsModule } from "@angular/forms";
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { TranslatePipe } from '@ngx-translate/core';
-import { catchError, combineLatest, concat, distinctUntilChanged, finalize, firstValueFrom, pipe, startWith, Subject, switchMap, take, takeUntil } from 'rxjs';
-import { ExtractCountryPipe } from "../../pipes/extract-country.pipe";
+import { catchError, combineLatest, distinctUntilChanged, finalize, pipe, Subject, switchMap, take, takeUntil } from 'rxjs';
+import { SupportedLang } from "../../../../core/models/supported-lang.model";
 import { LangService } from '../../../../core/services/lang.service';
+import { LoaderService } from "../../../../core/services/loader.service";
 import { NotificationService } from '../../../../core/services/notification.service';
 import { PaginationInfo } from '../../models/todo.model';
+import { ExtractCountryPipe } from "../../pipes/extract-country.pipe";
 import { TodoService } from '../../services/todo.service';
-import { SupportedLang } from "../../../../core/models/supported-lang.model";
-import { LoaderService } from "../../../../core/services/loader.service";
 
 @Component({
   selector: 'app-header',

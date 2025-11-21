@@ -11,7 +11,7 @@ export function flushRefreshHasCompleted(
     req.url === url &&
     req.params.get('complete') === 'true' &&
     req.params.get('limit') === '1'
-  )
+  );
   refreshCompletedReq.flush(!!mockResponse?.totalItems);
 }
 

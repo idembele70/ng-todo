@@ -1,14 +1,14 @@
 import { AsyncPipe, NgFor, NgIf } from "@angular/common";
 import { Component, inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { BehaviorSubject, catchError, combineLatest, EMPTY, finalize, fromEvent, race, Subject, Subscription, switchMap, take, takeUntil, timer } from "rxjs";
+import { catchError, combineLatest, EMPTY, finalize, fromEvent, race, Subject, switchMap, take, takeUntil, timer } from "rxjs";
+import { LoaderService } from "../../../../core/services/loader.service";
 import { NotificationService } from '../../../../core/services/notification.service';
 import { SpinnerDirective } from "../../directives/spinner.directive";
 import { PaginationInfo, Todo, ToggleEditStartEvent } from "../../models/todo.model";
 import { TodoService } from '../../services/todo.service';
-import { DeleteTodoEvent, TodoTableRowComponent } from "../todo-table-row/todo-table-row.component";
-import { LoaderService } from "../../../../core/services/loader.service";
 import { todoTitleExistsValidator } from "../../validators/todo-title-exists.validator";
+import { DeleteTodoEvent, TodoTableRowComponent } from "../todo-table-row/todo-table-row.component";
 
 @Component({
   selector: 'app-todo-table',
