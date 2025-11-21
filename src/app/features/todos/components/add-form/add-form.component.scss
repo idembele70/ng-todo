@@ -1,0 +1,10 @@
+.add-todo-form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+  margin-top: 0.5rem;
+  @media screen and (max-width: 450px) {
+    flex-direction: column;
+  }
+}

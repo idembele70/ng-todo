@@ -39,22 +39,6 @@ body {
   }
 }
 
-.container {
-  width: 880px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.9));
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(16, 24, 40, .08);
-  padding: 1.25rem;
-  backdrop-filter: blur(6px);
-  border: 1px solid rgb(0, 0, 0, .03);
-  @media (max-width: 880px) {
-    width: 100%;
-  }
-  @media screen and (max-width: 450px) {
-    padding: .5rem;
-  }
-}
-
 .btn {
   background-color: var(--accent);
   color: white;

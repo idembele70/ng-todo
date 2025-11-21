@@ -1,14 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AddFormComponent } from "./components/add-form/add-form.component";
-import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from "./components/header/header.component";
-import { TodoTableComponent } from "./components/todo-table/todo-table.component";
+import { MainLayoutComponent } from "./core/layout/main-layout/main-layout.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, AddFormComponent, TodoTableComponent, FooterComponent],
+  imports: [ MainLayoutComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
