@@ -41,7 +41,7 @@
       [dataTestId]="'edit-todo-title-input'"
       [formControl]="titleInputControl"
       (enter)="save($event)"
-      (espace)="save($event)"
+      (escape)="save($event)"
       [placeholder]="'addTodoForm.placeholder' | translate"
       [attr.aria-label]="'todoTable.row.title.editInput.ariaLabel' | translate"
       [isSearching]="searching" />

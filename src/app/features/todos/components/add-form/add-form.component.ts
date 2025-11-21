@@ -1,12 +1,11 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { catchError, combineLatest, debounceTime, distinctUntilChanged, EMPTY, finalize, map, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { catchError, combineLatest, EMPTY, finalize, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { LoaderService } from '../../../../core/services/loader.service';
 import { NotificationService } from '../../../../core/services/notification.service';
 import { SpinnerDirective } from '../../directives/spinner.directive';
-import { PaginationInfo, Todo } from '../../models/todo.model';
-import { SanitizeTodoTitlePipe } from '../../pipes/sanitize-todo-title.pipe';
+import { PaginationInfo } from '../../models/todo.model';
 import { TodoService } from '../../services/todo.service';
 import { todoTitleExistsValidator } from '../../validators/todo-title-exists.validator';
 import { TitleInputComponent } from "../title-input/title-input.component";

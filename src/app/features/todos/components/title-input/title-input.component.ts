@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, inject, Input, Output, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, inject, Input, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
 import { LoaderService } from '../../../../core/services/loader.service';
-import { SanitizeTodoTitlePipe } from '../../pipes/sanitize-todo-title.pipe';
 import { SpinnerDirective } from '../../directives/spinner.directive';
+import { SanitizeTodoTitlePipe } from '../../pipes/sanitize-todo-title.pipe';
 
 @Component({
   selector: 'app-title-input',
@@ -74,7 +73,7 @@ export class TitleInputComponent implements ControlValueAccessor {
   @Input() isSearching = false;
   @ViewChild('inputRef') titleInput!: ElementRef<HTMLInputElement>;
   @Output() enter = new EventEmitter<KeyboardEvent>();
-  @Output() espace = new EventEmitter<KeyboardEvent>();
+  @Output() escape = new EventEmitter<KeyboardEvent>();
 
   value = '';
   disabled = false;
@@ -85,7 +84,7 @@ export class TitleInputComponent implements ControlValueAccessor {
     this.enter.emit(ev as KeyboardEvent);
   };
   onEscape = (ev: Event) => {
-    this.espace.emit(ev as KeyboardEvent);
+    this.escape.emit(ev as KeyboardEvent);
   };
 
   updateValue(event: Event) {

@@ -251,8 +251,8 @@ describe('TodoService', () => {
       );
       const update: Pick<Todo, 'title' | 'id'> = {
         id: 1,
-        title: 'edited title'
-      }
+        title: 'edited title',
+      };
       const promise = firstValueFrom(service.editTodoTitle(update));
       const req = httpMock.expectOne(apiPaths.EDIT_TITLE + update.id);
       expect(req.request.method).toBe('PUT');
@@ -368,6 +368,6 @@ describe('TodoService', () => {
       const response = await promise;
       expect(response).toBeTrue();
     });
-  })
+  });
 });
 
